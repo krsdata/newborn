@@ -46,5 +46,5 @@
         </div>
         <!-- /.side-menu --> 
         <!-- ================================== TOP NAVIGATION : END ================================== -->
-        <div class="app-img outer-bottom-xs"><img alt="app" src="{{ asset('public/enduser/assets/images/app-img.jpg')}}" /></div>
+        
     </div>
