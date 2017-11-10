@@ -1,17 +1,9 @@
 @extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+@section('content') 
+@include('partials.home-banner-section')
+@include('partials.30-per-sale-section')
+@include('partials.baby-shower-box-section')
+@include('partials.social-network-section')
+@include('partials.how-its-work-section')
+@stop
+    
