@@ -24,7 +24,7 @@ class LoginController extends Controller
                 echo 'Error';
             }
         } else {
-            return view('user.login');
+            return view('login');
         }
     }
 

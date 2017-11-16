@@ -20,7 +20,23 @@ Route::get('home',[
         ]);
 Route::get('/login',[
           'as' => 'login',
-          'uses'  => 'LoginController@index'
+          'uses'  => 'LoginController@userLogin'
+        ]);
+Route::get('/refer',[
+          'as' => 'refer',
+          'uses'  => 'ReferController@index'
+        ]);
+Route::get('/plan',[
+          'as' => 'plan',
+          'uses'  => 'PlanController@index'
+        ]);
+Route::get('/detail-page',[
+          'as' => 'detailPage',
+          'uses'  => 'DetailPageController@index'
+        ]);
+Route::get('/checkout',[
+          'as' => 'checkout',
+          'uses'  => 'CheckoutController@index'
         ]);
 /*
 |--------------------------------------------------------------------------

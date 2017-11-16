@@ -28,7 +28,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-2">
-          <a href="#" class="logo">
+          <a href="{{ url('/home') }}" class="logo">
             <img src="{{ asset('public/assets/frontend/img/logo.png') }}" alt="newborn express">
           </a>
         </div>
@@ -51,7 +51,7 @@
                   
                 </ul>
               </li>
-              <li><a href="#">Login</a></li>
+              <li><a href="{{ url('/login') }}">Login</a></li>
               <li><a href="#">Signup</a></li>
             </ul>
             
