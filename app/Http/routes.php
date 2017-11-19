@@ -36,10 +36,6 @@ Route::get('/box/{name}',[
           'as' => 'boxPage',
           'uses'  => 'BoxController@index'
         ]);
-Route::get('/checkout',[
-          'as' => 'checkout',
-          'uses'  => 'CheckoutController@index'
-        ]);
 
 
 

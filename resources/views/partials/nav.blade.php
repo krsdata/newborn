@@ -47,8 +47,7 @@
 							<li><a href="{{url('checkout')}}"><img style="position: absolute; top: 73px; z-index: -10000;
     right: 25px;" src="{{ asset('assets/img/cart-ico.png') }}">
 							<span style="color:#fff;background-color: red; font-weight: bold">{{
-								Cart::content()->count() or 0
-							}}</span></a></li>
+								(Cart::content()->count())							}}</span></a></li>
 							 
 						</ul>
 					</div>
