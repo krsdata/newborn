@@ -25,22 +25,22 @@
 									
 								</ul>
 							</li>
-							<li><a href="login.html">Login</a></li>
-							<li><a href="login.html">Signup</a></li>
+							<li><a href="login">Login</a></li>
+							<li><a href="signup">Signup</a></li>
 						</ul>
 						
 					</div>
 					
 					<div class="main-menu">
 						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="plan.html">Toys Boxes</a></li>
-							<li><a href="plan.html">Offers</a></li>
+							<li><a href="/">Home</a></li>
+							<li><a href="plan">Toys Boxes</a></li>
+							<li><a href="plan">Offers</a></li>
 							<li><a href="#">Blogs</a></li>
-							<li><a href="login.html">Join Us</a></li>
-							<li><a href="detail-page.html">Toys Shop</a></li>
-							<li><a href="plan.html">Our Plan</a></li>
-							<li><a href="plan.html">Pricing</a></li>
+							<li><a href="login">Join Us</a></li>
+							<li><a href="plan">Toys Shop</a></li>
+							<li><a href="plan">Our Plan</a></li>
+							<li><a href="plan">Pricing</a></li>
 							<li><a href="#">Contact</a></li>
 						</ul>
 						<ul style="float:right">
