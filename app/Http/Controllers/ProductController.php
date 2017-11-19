@@ -137,8 +137,8 @@ class ProductController extends Controller {
 
     public function addToCart(Request $request, $id) 
     { 
-        
-         $item =  $request->get('item'); 
+        $c = ['1'=>'mini','2'=>'small','3'=>'large'];
+        $item =  $request->get('item'); 
          if($item ){
             $qty = substr($item,-1);
          } else{
@@ -146,12 +146,14 @@ class ProductController extends Controller {
          } 
         if ($request->isMethod('get')) {
             $product_id = $request->get('id');
-            $product = Product::find($id);   
-            Cart::add(array('id' => $product->id, 'name' => $product->product_title, 'qty' => $qty, 'price' => $product->price,'photo'=>$product->photo));
+            //$product = Product::find($id);   
+            Cart::add(array('id' => $id, 'name' => $c[$id], 'qty' => $qty, 'price' => 100,'photo'=>''));
         }
         $cart = Cart::content();  
+
        // $request->session()->put('key', 'value');
-         return Redirect::to(url()->previous());
+        //return Redirect::to(url()->previous());
+         return Redirect::to('checkout');
          
     }
 

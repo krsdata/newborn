@@ -102,6 +102,13 @@ class ProductController extends Controller {
 
     public function store(ProductRequest $request, Product $product) 
     {
+         $product->product_title      =   $request->get('product_title');
+        $product->product_category   =   $request->get('product_category');
+        $product->description        =   $request->get('description');
+        $product->price              =   $request->get('price');
+         $product->plan              =   $request->get('plan');
+        $product->discount           =   $request->get('discount');
+
         if ($request->file('image')) { 
             $photo = $request->file('image');
             $destinationPath = storage_path('uploads/products');
@@ -109,16 +116,14 @@ class ProductController extends Controller {
             $photo_name = time().$photo->getClientOriginalName();
             $request->merge(['photo'=>$photo_name]);
            
-            $product->product_title      =   $request->get('product_title');
-            $product->product_category   =   $request->get('product_category');
-            $product->description        =   $request->get('description');
-            $product->price              =   $request->get('price');
-            $product->discount              =   $request->get('discount');
+           
             $product->photo              =   $photo_name;
  
             $product->save(); 
            
-        } 
+        } else{
+             $product->save(); 
+        }
        
         return Redirect::to(route('product'))
                             ->with('flash_alert_notice', 'New Product was successfully created !');
@@ -163,6 +168,7 @@ class ProductController extends Controller {
             $product->description        =   $request->get('description');
             $product->photo              =   $photo_name;
             $product->price              =   $request->get('price');
+              $product->plan              =   $request->get('plan');
             $product->discount              =   $request->get('discount');
             $product->save(); 
         }else{
@@ -171,6 +177,7 @@ class ProductController extends Controller {
             $product->description        =   $request->get('description');
             $product->photo              =   $request->get('photo');
             $product->price              =   $request->get('price');
+              $product->plan              =   $request->get('plan');
             $product->discount              =   $request->get('discount');
             $product->save(); 
         }

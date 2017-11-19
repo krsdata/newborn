@@ -24,8 +24,9 @@ class ProductRequest  extends Request {
                             'product_category'  => 'required', 
                             'description'       => 'required',
                             'price'             =>  'required|numeric|min:0',
+                             'plan'             =>  'required',
                             'discount'             =>  'required|numeric|min:0',
-                            'image'             => 'required|mimes:jpeg,bmp,png,gif'
+                            'image'             => 'mimes:jpeg,bmp,png,gif'
                         ];
                     }
                 case 'PUT':
@@ -38,6 +39,7 @@ class ProductRequest  extends Request {
                             'description'       => 'required',
                             'price'             =>  'required|numeric|min:0',
                             'discount'             =>  'required|numeric|min:0',
+                             'plan'             =>  'required',
                             'image'             => 'mimes:jpeg,bmp,png,gif'
                         ];
                     }

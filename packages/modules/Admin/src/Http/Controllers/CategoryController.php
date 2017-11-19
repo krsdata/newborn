@@ -27,6 +27,7 @@ use Crypt;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Dispatcher; 
 use App\Helpers\Helper;
+use QueryException;
 
 /**
  * Class AdminController
@@ -220,10 +221,27 @@ class CategoryController extends Controller {
      * 
      */
     public function destroy(Category $category) {
-        
-        $d = Category::where('id',$category->id)->delete(); 
-        return Redirect::to(route('category'))
-                        ->with('flash_alert_notice', 'Category was successfully deleted!');
+
+      
+        try {
+            Category::where('id',$category->id)->delete(); 
+            return Redirect::to(route('category'))
+                            ->with('flash_alert_notice', 'Category was successfully deleted!');
+
+            } catch (Illuminate\Database\QueryException $e) {
+                return Redirect::to(route('category'))
+                            ->with('flash_alert_notice', "Category can't be deleted!");
+
+            } catch (\PDOException $e) {
+                return Redirect::to(route('category'))
+                            ->with('flash_alert_notice', "Category can't be deleted!");
+            }
+            catch (\ErrorException $e) {
+                 return Redirect::to(route('category'))
+                            ->with('flash_alert_notice', "Category can't be deleted!");
+            }
+
+
     }
 
     public function show(Category $category) {

@@ -39,11 +39,11 @@
                           
                       </p>
 				</div>
-			</div>
+			</div>  
 			<div class="row">
 				<div class="col-sm-4">
 					<div class="plan-card">
-						<a href="{{url('checkout')}}"> 
+						<a href="{{url('addToCart/1')}}"> 
 						<img src="{{ asset('assets/img/box22.png') }}">
 						<h4>$12.99/Box</h4>
 						<p>Mini Toy Box</p>
@@ -53,7 +53,7 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="plan-card">
-						<a href="{{url('checkout')}}"> 
+						<a <a href="{{url('addToCart/2')}}"> 
 						<img src="{{ asset('assets/img/box22.png') }}">
 						<h4>$12.99/Box</h4>
 						<p>Small Toy Box</p>
@@ -63,7 +63,7 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="plan-card">
-						<a href="{{url('checkout')}}"> 
+						<a href="{{url('addToCart/2')}}"> 
 						<img src="{{ asset('assets/img/box22.png') }}">
 						<h4>$12.99/Box</h4>
 						<p>Large Toy Box</p>

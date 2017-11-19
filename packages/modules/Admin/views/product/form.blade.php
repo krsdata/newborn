@@ -22,6 +22,56 @@
     </div> 
 
 
+      <div class="form-group{{ $errors->first('plan', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Select Plan  <span class="error">*</span></label>
+        <div class="col-lg-8 col-md-8"> 
+            
+                 <select name="plan" class="form-control form-cascade-control input-small">
+                   <option value="">Select Group Category...</option>
+                    
+                    <option value="1" @if(isset($product->plan) && ($product->plan=='1')) {{ 'selected="selected"'}}  @endif 
+
+                    @if(old('plan'))  {{ 'selected="selected"'}} @endif
+                      >
+                    
+                   1 Monthl Plan
+                    
+                    </option>
+
+                     <option value="3" @if(isset($product->plan) && ($product->plan=='3')) {{ 'selected="selected"'}}  @endif 
+
+                    @if(old('plan'))  {{ 'selected="selected"'}} @endif
+                      >
+                    
+                   3 Monthl Plan
+                    
+                    </option>
+
+                     <option value="6" @if(isset($product->plan) && ($product->plan=='6')) {{ 'selected="selected"'}}  @endif 
+
+                    @if(old('plan'))  {{ 'selected="selected"'}} @endif
+                      >
+                    
+                   6 Monthl Plan
+                    
+                    </option>
+                     <option value="12" @if(isset($product->plan) && ($product->plan=='12')) {{ 'selected="selected"'}}  @endif 
+
+                    @if(old('plan'))  {{ 'selected="selected"'}} @endif
+                      >
+                    
+                   12 Monthl Plan
+                    
+                    </option> 
+                    </select>
+
+            <span class="label label-danger">{{ $errors->first('plan', ':message') }}</span>
+        </div>
+    </div> 
+
+
+
+
  
      <div class="form-group{{ $errors->first('price', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label"> Product Price <span class="error">*</span></label>

@@ -44,10 +44,12 @@
 							<li><a href="#">Contact</a></li>
 						</ul>
 						<ul style="float:right">
-							<li><a href="#"><img src="{{ asset('assets/img/cart-ico.png') }}"></a></li>
-							<li style="padding-right:0px;"><a href="#">
-
-							<img src="{{ asset('assets/img/wish-list.png') }}"></a></li>
+							<li><a href="{{url('checkout')}}"><img style="position: absolute; top: 73px; z-index: -10000;
+    right: 25px;" src="{{ asset('assets/img/cart-ico.png') }}">
+							<span style="color:#fff;background-color: red; font-weight: bold">{{
+								Cart::content()->count() or 0
+							}}</span></a></li>
+							 
 						</ul>
 					</div>
 					

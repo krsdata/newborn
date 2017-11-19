@@ -106,7 +106,8 @@ class Handler extends ExceptionHandler
             exit();
         }
         if($e instanceof QueryException)
-        {    
+        {   
+         
             if($api_url)
             {    
                 echo json_encode(
@@ -143,7 +144,10 @@ class Handler extends ExceptionHandler
             } 
             exit();
            
-        } 
+        }  
+
+        
+
         if($e instanceof ErrorException){
            if($api_url)
             {

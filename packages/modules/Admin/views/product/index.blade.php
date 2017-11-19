@@ -44,9 +44,8 @@
                                            <thead><tr>
                                                     <th>Sno</th> 
                                                     <th>Product Title</th>
-                                                    <th>Category</th>
-                                                    <th>Sub Category </th>
-                                                    <th>Photo </th> 
+                                                    <th>Category</th> 
+                                                    <th>Plan </th> 
                                                     <th>Price </th> 
                                                     <th>Created Date</th> 
                                                     <th>Action</th>
@@ -74,10 +73,11 @@
                                                     {{ ($helper->getCategoryName($result->category->parent_id)==null)?$result->category->name:$helper->getCategoryName($result->category->parent_id) }}
 
                                                     </td>
-                                                    <td>    {{ $result->category->name }}</td>
+                                                    
                                                      <td> 
-                                                      <!--   {!!  substr(html_entity_decode($result->description, ENT_QUOTES, 'UTF-8'),0,50)  !!}.. -->
-                                                        <img src="{!! Url::to('storage/uploads/products/'.$result->photo) !!}" width="100px">
+                                                      
+                                                       {{ $result->plan }} Month Plan
+                                                        
                                                      </td>
                                                     <td>    {{ number_format($result->price, 2, '.', ',') }}</td>
                                                     <td>

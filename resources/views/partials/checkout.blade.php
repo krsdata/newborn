@@ -1,3 +1,5 @@
+
+
 <div class="plan-section">
 		<div class="container">
 			
@@ -35,42 +37,28 @@
 						<p><strong>Important!</strong> Boxes start shipping on/around November 13th and will (typically) arrive between 11/20 ~ 12/15. PLEASE do NOT use any non-English characters on the name or address (e.g. no accents) :).</p>
 						<div class="order-summary">
 							<h4>Order Summary</h4>
+							
+ 
 							<table width="100%" border="1">
-								  <tr>
-								    <td><a href="#"><i class="icon-remove-circle fa fa-trash-o"></i></a></td>
-								    <td><div>
-								<div class="product-name"> Newborn Mini</div>
-								<div class="subscription-plan">Month To Month Plan @ $12.99/mo
-									
-								</div>
-								<div class="subscription-autorenew"><strong>1 delivery<span class="auto-renew-cart">, auto-renewing</span></strong></div>
-								</div></td>
-								    <td>$12.99</td>
-								  </tr>
-								  <tr>
-								    <td><a href="#"><i class="icon-remove-circle fa fa-trash-o"></i></a></td>
-								    <td><div>
-								<div class="product-name"> Newborn Mini</div>
-								<div class="subscription-plan">Month To Month Plan @ $12.99/mo
-									
-								</div>
-								<div class="subscription-autorenew"><strong>1 delivery<span class="auto-renew-cart">, auto-renewing</span></strong></div>
-								</div></td>
-								    <td>$12.99</td>
-								  </tr>
-								  <tr>
-								    <td><a href="#"><i class="icon-remove-circle fa fa-trash-o"></i></a></td>
-								    <td><div>
-								<div class="product-name"> Newborn Mini</div>
-								<div class="subscription-plan">Month To Month Plan @ $12.99/mo
-									
-								</div>
-								<div class="subscription-autorenew"><strong>1 delivery<span class="auto-renew-cart">, auto-renewing</span></strong></div>
-								</div></td>
-								    <td>$12.99</td>
-								  </tr>
-								</table>
-
+							@if(count($cart)==0)
+								<p style="font-size: large; color: brown;margin-top: 10px;" class="cartEmpty">Your cart is empty! </p>
+							@endif
+								@foreach($cart as  $item)
+									<tr>
+									    <td><a href="{{ url('removeItem/'.$item->id) }}"><i class="icon-remove-circle fa fa-trash-o"></i></a></td>
+									    <td>
+									    	<div class="product-name"> Newborn {{$item->name}}</div>
+											<div class="subscription-plan">Month To Month Plan @ {{$item->price}}/mo
+											<div class="subscription-autorenew">
+											<strong>1 delivery<span class="auto-renew-cart">, auto-renewing</span></strong>
+											</div>
+											</div>
+										</td> 
+									    <td>{{$item->qty}}x{{money_format('%!i', $item->price)}} </td>
+								  	</tr>
+							  	@endforeach
+							</table>
+							
 								<table width="100%" border="1" class="total-pay">
 								  <tr>
 								    <td><strong>Estimated Shipping:</strong></td>
@@ -82,7 +70,7 @@
 								  </tr>
 								  <tr>
 								    <td><strong>Total</strong></td>
-								    <td><strong>$169.86 USD</strong></td>
+								    <td><strong>${{ money_format('%!i', isset($sub_total)?$sub_total:0) }}	 USD</strong></td>
 								  </tr>
 								</table>
 
