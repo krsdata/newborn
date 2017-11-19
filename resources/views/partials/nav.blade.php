@@ -3,12 +3,12 @@
 			<div class="row">
 				<div class="col-sm-2">
 					<a href="#" class="logo">
-						<img src="img/logo.png" alt="">
+						<img src="{{ asset('assets/img/logo.png')}}" alt="">
 					</a>
 				</div>
 				<div class="col-sm-10">
 					<div class="top-bar">
-						<a href="refer.html"><img src="{{ asset('assets/img/get-box.png') }}"></a>
+						<a href="refer"><img src="{{ asset('assets/img/get-box.png') }}"></a>
 
 						<ul>
 							<li class="mega-menu"><a href="#">Pick a box</a>
@@ -25,15 +25,15 @@
 									
 								</ul>
 							</li>
-							<li><a href="login">Login</a></li>
-							<li><a href="signup">Signup</a></li>
+							<li><a href="{{url('login')}}">Login</a></li>
+							<li><a href="{{url('signup')}}">Signup</a></li>
 						</ul>
 						
 					</div>
 					
 					<div class="main-menu">
 						<ul>
-							<li><a href="/">Home</a></li>
+							<li><a href="{{url('/')}}">Home</a></li>
 							<li><a href="plan">Toys Boxes</a></li>
 							<li><a href="plan">Offers</a></li>
 							<li><a href="#">Blogs</a></li>

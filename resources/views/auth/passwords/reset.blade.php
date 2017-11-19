@@ -1,7 +1,12 @@
-@extends('layouts.app')
+        
+        @section('header')
+        <h1>BOX</h1>
+        @stop
 
-@section('content')
-<div class="container">
+        @section('content') 
+
+            @include('partials.nav')
+            <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -62,4 +67,4 @@
         </div>
     </div>
 </div>
-@endsection
+             @stop

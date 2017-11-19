@@ -1,11 +1,32 @@
-@extends('layouts.app')
+ 
 
-@section('content')
-<div class="container">
-    <div class="row">
+@extends('layouts.master')
+    @section('title', 'BOX')
+        
+        @section('header')
+        <h1>BOX</h1>
+        @stop
+
+        @section('content') 
+
+            @include('partials.nav')
+            <!-- Left side column. contains the logo and sidebar -->
+<div class="login-section">
+    <div class="container">
+    
+
+    <div class="omb_login">
+     <h3 class="omb_authTitle">Login or <a href="{{url('signup')}}">Sign up</a></h3>
+        <div class="row omb_row-sm-offset-3 omb_socialButtons">
+             
+        </div>
+
+       
+
+             <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
@@ -15,7 +36,6 @@
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -62,5 +82,13 @@
             </div>
         </div>
     </div>
-</div>
-@endsection
+    </div>
+
+
+
+        </div>
+    </div>
+
+
+           
+        @stop

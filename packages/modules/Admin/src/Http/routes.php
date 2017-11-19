@@ -5,6 +5,12 @@
       Route::get('admin/signUp','Modules\Admin\Http\Controllers\AuthController@signUp'); 
       Route::post('admin/registration','Modules\Admin\Http\Controllers\AuthController@registration'); 
       
+
+    Route::get('admin/forgot-password','Modules\Admin\Http\Controllers\AuthController@forgetPassword');
+    Route::post('password/email','Modules\Admin\Http\Controllers\AuthController@sendResetPasswordLink');
+    Route::get('admin/password/reset','Modules\Admin\Http\Controllers\AuthController@resetPassword'); 
+
+
       Route::post('admin/login',function(App\Admin $user){
         $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')]; 
             $auth = auth()->guard('admin');

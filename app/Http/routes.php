@@ -16,10 +16,8 @@ Route::get('home',[
           'as' => 'home',
           'uses'  => 'HomeController@index'
         ]);
-Route::get('/login',[
-          'as' => 'login',
-          'uses'  => 'LoginController@userLogin'
-        ]);
+
+
 Route::get('/refer',[
           'as' => 'refer',
           'uses'  => 'ReferController@index'
@@ -175,6 +173,12 @@ Route::get('checkout',[
           'uses'  => 'UserController@showLoginForm'
         ]); 
 
+
+Route::get('myaccount/login',[
+          'as' => 'showLoginForm',
+          'uses'  => 'UserController@showLoginForm'
+        ]); 
+
 Route::post('billing',[
           'as' => 'billing',
           'uses'  => 'ProductController@billing'
@@ -213,10 +217,7 @@ Route::get('signout', function(App\User $user , Illuminate\Http\Request $request
    
 
 
-Route::get('myaccount/login',[
-          'as' => 'showLoginForm',
-          'uses'  => 'ProductController@showLoginForm'
-        ]); 
+
 
 Route::get('myaccount',[
           'as' => 'myaccount',
@@ -235,7 +236,11 @@ Route::post('myaccount/signup',[
           'uses'  => 'UserController@userSignup'
         ]); 
         
-        
+Route::get('signup',[
+          'as' => 'myaccount-signup',
+          'uses'  => 'ProductController@showSignupForm'
+        ]); 
+             
 
 
 Route::post('login',function(App\User $user , Illuminate\Http\Request $request){ 
@@ -275,7 +280,6 @@ Route::post('Ajaxlogin',function(App\User $user , Illuminate\Http\Request $reque
 
  });
 
+Route::get('password/reset','AuthController@forgetPassword');  
 
-
-
-      
+Route::post('password/email','AuthController@forgetPasswordLink');

@@ -1,20 +1,33 @@
-@extends('layouts.app')
 
-<!-- Main Content -->
-@section('content')
-<div class="container">
-    <div class="row">
+@extends('layouts.master')
+    @section('title', 'BOX')
+        
+        @section('header')
+        <h1>BOX</h1>
+        @stop
+
+        @section('content') 
+
+            @include('partials.nav')
+            <div class="login-section">
+    <div class="container">
+    
+
+    <div class="omb_login">
+     <h3 class="omb_authTitle">Reset Password</h3>
+        <div class="row omb_row-sm-offset-3 omb_socialButtons">
+             
+        </div> 
+             <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+                 @if (session('status'))
+                                <div class="alert alert-success">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
                 <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
+                       <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -43,5 +56,10 @@
             </div>
         </div>
     </div>
-</div>
-@endsection
+    </div> 
+
+        </div>
+    </div>
+
+        @stop
+

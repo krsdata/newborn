@@ -1,18 +1,30 @@
-@extends('layouts.master')
-    @section('title', 'HOME')
+ @extends('layouts.master')
+    @section('title', 'BOX')
         
         @section('header')
-        <h1>Home</h1>
+        <h1>BOX</h1>
         @stop
 
         @section('content') 
 
-            @include('partials.menu')
-          <div class="container" ng-app="postApp" ng-controller="postController">
-    <div class="row">
+            @include('partials.nav')
+            <!-- Left side column. contains the logo and sidebar -->
+            
+        <div class="login-section">
+    <div class="container">
+    
+
+    <div class="omb_login">
+   <h3 class="omb_authTitle">Registration or <a href="{{url('login')}}">Login</a></h3>
+        <div class="row omb_row-sm-offset-3 omb_socialButtons">
+             
+        </div>
+
+       
+
+             <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
                  @if($errors->has())
                         <div class="alert alert-danger">
                             @foreach ($errors->all() as $error)
@@ -20,9 +32,8 @@
                             @endforeach
                             </div>
                             @endif 
-                <div class="panel-body" >
-
-                    <form class="form-horizontal" action="{{url('myaccount/signup')}}"   name="userForm"  method="post">
+                <div class="panel-body">
+                     <form class="form-horizontal" action="{{url('myaccount/signup')}}"   name="userForm"  method="post">
                         {{ csrf_field() }}
                          
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -87,12 +98,18 @@
                             </div>
                             
                     </form>
-                   
                 </div>
             </div>
         </div>
     </div>
-</div>
- 
-@stop
- 
+    </div>
+
+
+
+        </div>
+    </div>
+
+
+        @stop
+
+
