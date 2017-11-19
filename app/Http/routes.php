@@ -11,6 +11,40 @@
 |
 */
 
+
+Route::get('home',[
+          'as' => 'home',
+          'uses'  => 'HomeController@index'
+        ]);
+Route::get('/login',[
+          'as' => 'login',
+          'uses'  => 'LoginController@userLogin'
+        ]);
+Route::get('/refer',[
+          'as' => 'refer',
+          'uses'  => 'ReferController@index'
+        ]);
+Route::get('/plan',[
+          'as' => 'plan',
+          'uses'  => 'PlanController@index'
+        ]);
+Route::get('/gift/{name}',[
+          'as' => 'plan',
+          'uses'  => 'PlanController@index'
+        ]);
+Route::get('/box/{name}',[
+          'as' => 'boxPage',
+          'uses'  => 'BoxController@index'
+        ]);
+Route::get('/checkout',[
+          'as' => 'checkout',
+          'uses'  => 'CheckoutController@index'
+        ]);
+
+
+
+
+
 Route::match(['post','get'],'cat','HomeController@index');
 
 
@@ -35,10 +69,7 @@ Route::get('checkout',[
           'uses'  => 'HomeController@checkout'
         ]); 
 
-Route::get('home',[
-          'as' => 'home',
-          'uses'  => 'HomeController@home'
-        ]);
+ 
 Route::get('category',[
           'as' => 'category-front',
           'uses'  => 'HomeController@category'

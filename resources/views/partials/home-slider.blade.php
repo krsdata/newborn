@@ -1,99 +1,79 @@
-   <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-        <div id="hero">
-          <div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
-           
-            <!-- /.item -->
-          @if($banner->count())
-           @foreach($banner as $key => $value) 
-            <div class="item" style="background-image: url({!! asset('storage/files/banner/'.$value->field_value) !!});">
-              <div class="container-fluid">
-                <div class="caption bg-color vertical-center text-left">
-                 
+  <div class="banner-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+
+              <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <img src="{{ asset('assets/img/toy1.png')}}" alt="...">
+                
                 </div>
-                <!-- /.caption --> 
-              </div>
-              <!-- /.container-fluid --> 
-            </div>
-             @endforeach  
-
-             @else 
-            <div class="item" style="background-image: url({{ asset('public/enduser/assets/images/sliders/02.jpg')}});">
-              <div class="container-fluid">
-                <div class="caption bg-color vertical-center text-left">
-                 
+                <div class="item">
+                    <img src="{{ asset('assets/img/toy1.png')}}" alt="...">
                 </div>
-                <!-- /.caption --> 
-              </div>
-              <!-- /.container-fluid --> 
-            </div>
-
-             <div class="item" style="background-image: url({{ asset('public/enduser/assets/images/sliders/01.jpg') }});">
-              <div class="container-fluid">
-              
-              </div>
-              <!-- /.container-fluid --> 
-            </div>
-            
-              <div class="item" style="background-image: url({{ asset('public/enduser/assets/images/sliders/03.jpg')}});">
-              <div class="container-fluid">
-                <div class="caption bg-color vertical-center text-left">
-                 
+              <div class="item">
+                    <img src="{{ asset('assets/img/toy1.png')}}" alt="...">
                 </div>
-                <!-- /.caption --> 
-              </div>
-              <!-- /.container-fluid --> 
-            </div>
-            <!-- /.item --> 
-            @endif
-
-
-            
+              </div> 
           </div>
-          <!-- /.owl-carousel --> 
-        </div>
-        <div class="info-boxes wow fadeInUp">
-          <div class="info-boxes-inner">
-            <div class="row">
-              <div class="col-md-6 col-sm-4 col-lg-4">
-                <div class="info-box">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <h4 class="info-box-heading green">money back</h4>
-                    </div>
-                  </div>
-                  <h6 class="text">7 Days Money Back Guarantee</h6>
+        </div> 
+        <div class="col-sm-4 banner-add">
+          <div class="banner-heading">
+            <h1>Discover a monthly Baby Toy Boxes of lorem ipsum dolor sit amet</h1>
+              <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+              </ol>
+
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                 <img src="{{ asset('assets/img/box1.png')}}" alt="...">
+                 <h4>Baby Toys Mini Box with 3 Items</h4>
+                 <p>Lorem ipsum dolor is the dummy text
+            for describing the web site content
+            as dummy its a mockup.</p>
+                  
                 </div>
+                <div class="item">
+                   
+                    <img src="{{ asset('assets/img/box1.png')}}" alt="...">
+                   <h4>Baby Toys small Box with 5 Items</h4>
+                 <p>Lorem ipsum dolor is the dummy text
+            for describing the web site content
+            as dummy its a mockup.</p>
+                </div>
+              <div class="item">
+                  
+                  <img src="{{ asset('assets/img/box1.png')}}" alt="...">
+                   <h4> Baby Toys large Box with 8 Items</h4>
+                 <p>Lorem ipsum dolor is the dummy text
+            for describing the web site content
+            as dummy its a mockup. </p>
+                </div>
+               
               </div>
-              <!-- .col -->
+
+              <!-- Controls -->
               
-              <div class="hidden-md col-sm-4 col-lg-4">
-                <div class="info-box">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <h4 class="info-box-heading green">free shipping</h4>
-                    </div>
-                  </div>
-                  <h6 class="text">Shipping on order  over Rs 5999</h6>
-                </div>
-              </div>
-              <!-- .col -->
-              
-              <div class="col-md-6 col-sm-4 col-lg-4">
-                <div class="info-box">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <h4 class="info-box-heading green">Special Sale</h4>
-                    </div>
-                  </div>
-                  <h6 class="text">Extra Rs 5% off on all items </h6>
-                </div>
-              </div>
-              <!-- .col --> 
             </div>
-            <!-- /.row --> 
+
+            <div class="get-start">
+                <a href="#">Get Started</a>
+            </div>
+
           </div>
-          <!-- /.info-boxes-inner --> 
-          
         </div>
-   </div>
-  
+        
+      </div>
+    </div>
+  </div>
