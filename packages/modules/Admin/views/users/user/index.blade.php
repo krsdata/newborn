@@ -12,10 +12,10 @@
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-            <div class="col-md-12">
+             
                 <div class="col-md-12">
-                    <div class="panel panel-cascade">
-                        <div class="panel-body ">
+                    <div class="portlet light portlet-fit bordered">
+                        <div class="portlet-body">
                             <div class="row">
                                 <div class="box">
                                     <div class="box-header">
@@ -39,7 +39,7 @@
                                     @endif
                                       
                                    <div class="box-body table-responsive no-padding" >
-                                        <table class="table table-hover table-condensed">
+                                        <table class="table table-striped table-hover table-bordered">
                                             <thead><tr>
                                                     <th>Sno</th> 
                                                     <th>Full Name</th>
@@ -95,8 +95,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>            
+                </div>      
         </div> 
         <!-- Main row --> 
     </section><!-- /.content -->
