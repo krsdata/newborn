@@ -29,7 +29,13 @@
             } 
     }); 
       
-    Route::group(['middleware' => ['admin']], function () { 
+    
+    Route::get('paywithpaypal', array('as' => 'addmoney.paywithpaypal','uses' => 'Modules\Admin\Http\Controllers\AddMoneyController@payWithPaypal',));
+    Route::post('paypal', array('as' => 'addmoney.paypal','uses' => 'Modules\Admin\Http\Controllers\AddMoneyController@postPaymentWithpaypal',));
+    Route::get('paypal', array('as' => 'payment.status','uses' => 'Modules\Admin\Http\Controllers\AddMoneyController@getPaymentStatus',));
+
+
+Route::group(['middleware' => ['admin']], function () { 
 
         Route::get('admin', 'Modules\Admin\Http\Controllers\AdminController@index');
         

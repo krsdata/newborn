@@ -27,7 +27,11 @@ use App\Http\Controllers\Controller;
 class HomeController extends Controller { 
     /**
      * @var  Repository
-     */ 
+     */
+    public function __construct()
+    {
+        //$this->middleware('auth');
+    }
     /**
      * Displays all admin.
      *
