@@ -16,8 +16,8 @@
         "atayahmet/laravel-nestable": "^0.7.3",
         "phpmailer/phpmailer": "^5.2",
         "guzzlehttp/guzzle": "~5.2",
-        "paypal/rest-api-sdk-php": "*"
-
+        "omnipay/paypal": "~2.0",
+        "symfony/event-dispatcher": "^2.8"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -32,7 +32,10 @@ use Response;
 use Cart; 
 use PDF;
 use Modules\Admin\Models\Settings;
-
+use Omnipay\Omnipay;
+use Omnipay\Common\CreditCard; 
+use Omnipay\PayPal;
+use Fahim\PaypalIPN\PaypalIPNListener; 
 /**
  * Class AdminController
  */
@@ -117,9 +120,9 @@ class ProductController extends Controller {
         return view('cart', compact('cart','product_photo'));
     }
 
-
+    // checkout
     public function checkout(Request $request) 
-    {  
+    {   
         $cart = Cart::content();  
         $pid = [];
         foreach ($cart as $key => $value) {
@@ -133,6 +136,44 @@ class ProductController extends Controller {
 
         return view('end-user.checkout',compact('categories','products','category','cart','product_photo'));  
     }
+    // make payment 
+    public function makePayment()
+    {
+        try{
+
+            $gateway = Omnipay::create('PayPal_Pro');
+ 
+            $gateway->setUsername( 'kundan.r-facilitator-3_api1.cisinlabs.com' );
+            $gateway->setPassword( '32UN5286G4FDKWK7' );
+            $gateway->setSignature( 'AgsyRufAX1NOEGmzAg0vXIX4pkjQAEaRyKcNiHzfR5Ka0I-74umoKXhH' ); 
+            $gateway->setTestMode( true );
+        
+        
+            $card = new CreditCard(array(
+                'firstName'             => 'kandy',
+                'number'                => 9111111111111111,
+                'expiryMonth'           => 12,
+                'expiryYear'            => 2017,
+                'cvv'                   => 12
+            )); 
+            
+                $transaction = $gateway->purchase(array(
+                 'currency'         => 'USD',
+                 'description'      => 'Package',
+                 'card'             =>  $card,
+                 'name'             => 'p', 
+                 'amount'           =>  100.00 
+            ));
+            $response   = $transaction->send();
+            $data       = $response->getData();
+
+            dd( $data );
+        }catch (\Exception $e) { 
+            dd($e->getMessage());
+        }
+        
+    }
+
 
 
     public function addToCart(Request $request, $id) 
