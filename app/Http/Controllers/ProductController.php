@@ -491,7 +491,7 @@ class ProductController extends Controller {
 
     public function myaccount(Request $request)
     {   
-
+        
         if($this->user_id=="")
         {      
             return Redirect::to('myaccount/login');
