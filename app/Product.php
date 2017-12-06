@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use Modules\Admin\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Response;
+use App\ShippingBillingAddress;
 
 class Product extends Eloquent {
 

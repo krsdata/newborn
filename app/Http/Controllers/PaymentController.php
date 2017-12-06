@@ -7,19 +7,12 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Immoclick\Admin\Http\Requests\UserRequest;
-use Immoclick\Admin\Http\Requests\PackageRequest;
 use App\Http\Requests\PaymentRequest;
 use Immoclick\Admin\Models\Group;
-use Immoclick\Admin\Models\Package;
 use Immoclick\Admin\Models\City;
 use Immoclick\Admin\Models\Region;
-use Immoclick\Admin\Models\BuildingCategory;
-use Immoclick\Admin\Models\BuildingType;
-use Immoclick\Admin\Models\Building;
 use Immoclick\Admin\Models\User;
 use App\Models\Payment; 
-use Immoclick\Admin\Models\BuildingChoice;
-use Immoclick\Admin\Models\buildingRoom;
 use Validator;
 use Auth;
 use Paginate;
@@ -64,16 +57,7 @@ class PaymentController extends Controller {
         View::share('viewPage', 'package');
         $this->lang = $request->segment(1);
         $helper = new Helper;
-        if(strlen($this->lang)==2)
-        {
-            $this->lang = $helper->getLanguage($this->lang); 
-        }else{
-            $this->lang = $helper->getLanguage(null); 
-        } 
-        View::share('lang', $this->lang);
         View::share('helper', new Helper);
-        $online_since = Building::where('status', 1)->groupBy('Built_in')->get();
-        View::share('online_since', $online_since);
         
     }
 
@@ -101,15 +85,8 @@ class PaymentController extends Controller {
         // $min_price  = Building::where('status', 1)->min('Price');
         $max_price      = 1500000;
         $min_price      = 0;
-        $types      = Building::with(['btype'])->groupBy('TypeID')->get();
-        $types      = BuildingType::all();
-        $categories = BuildingCategory::orderBy('NameEN','ASC')->get();
-        $cities     = Building::with(['city'])->groupBy('CityID')->get();
-        $regions    = City::with(['region'])->groupBy('RegionID')->get();
-        $rooms      = Building::where('status', 1)->groupBy('Rooms_number')->get();
-        $region_id  = [];  
-
-        return view('payment.index', compact('package','packageID','payment','categories','online_since','region_id', 'rooms', 'building', 'max_price', 'min_price', 'types', 'cities', 'regions', 'helper'));
+        
+ 
     }
 
     /*

@@ -35,6 +35,12 @@ Route::get('/box/{name}',[
           'uses'  => 'BoxController@index'
         ]);
 
+Route::match(['get','post'],'makePayment',[
+          'as' => 'makePayment',
+          'uses'  => 'ProductController@makePayment'
+        ]);
+
+
 
 
 
@@ -151,7 +157,10 @@ Route::get('checkout',[
         'as' => '',
        'uses' =>  'ProductController@removeItem'
        ]);
-  Route::get('auth/logout', 'Auth\AuthController@getLogout');
+  Route::get('auth/logout', function(){
+  	Auth::logout();
+  	return Redirect::to('/');
+  });
 
   Route::get('register',[
           'as' => 'register',

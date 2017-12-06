@@ -25,8 +25,21 @@
 									
 								</ul>
 							</li>
+							
+
+							@if(Auth::user()!=null)
+							<li><a href="{{url('myaccount')}}">MyAccount</a></li>
+							@else
 							<li><a href="{{url('login')}}">Login</a></li>
+							@endif
+
+
+							@if(Auth::user()!=null)
+							<li><a href="{{url('auth/logout')}}">Logout</a></li>
+							@else
 							<li><a href="{{url('signup')}}">Signup</a></li>
+							@endif
+							
 						</ul>
 						
 					</div>

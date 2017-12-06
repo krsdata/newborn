@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\ProductRequest;
-use Modules\Admin\Models\User;
+use App\User;
 use Modules\Admin\Models\Category;
 use Modules\Admin\Models\Product; 
 use Modules\Admin\Models\ShippingBillingAddress;
@@ -129,16 +129,38 @@ class ProductController extends Controller {
             $pid[] = $value->id;
         }
         $product_photo =   Product::whereIn('id',$pid)->get(['photo','id'])->toArray();
-       // dd($product_photo);
-       // dd($cart);
+        
         $products = Product::with('category')->whereIn('id',$pid)->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
 
         return view('end-user.checkout',compact('categories','products','category','cart','product_photo'));  
     }
     // make payment 
-    public function makePayment()
+    public function makePayment(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+             'first_name' => 'required|max:50',
+                'last_name' => 'required|max:50',
+                'city' => 'required|max:255',
+                'state'=> 'required|max:255',
+                'postal_code' => 'required|max:20',
+                'country' => 'required|max:255',
+                'phone' => 'required|max:15|regex:/([0-9 ])+/',
+                'credit_card_number' => 'required|max:16',
+                'cvv' => 'required|numeric|min:3',
+                'month' => 'required',
+                'year' => 'required|digits:4|integer|min:'.(date('Y')),
+                'email' => 'required|email',
+                'password' => 'required'
+
+        ]); 
+        if ($validator->fails()) {
+            return Redirect::to('checkout')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+ 
         try{
 
             $gateway = Omnipay::create('PayPal_Pro');
@@ -150,26 +172,98 @@ class ProductController extends Controller {
         
         
             $card = new CreditCard(array(
-                'firstName'             => 'kandy',
-                'number'                => 9111111111111111,
-                'expiryMonth'           => 12,
-                'expiryYear'            => 2017,
-                'cvv'                   => 12
+                'firstName'             => $request->get('first_name'),
+                'lastName'              => $request->get('lastName'),
+                'number'                => $request->get('credit_card_number'),
+                'expiryMonth'           => $request->get('month'),
+                'expiryYear'            => $request->get('year'),
+                'cvv'                   => $request->get('cvv')
             )); 
             
                 $transaction = $gateway->purchase(array(
                  'currency'         => 'USD',
-                 'description'      => 'Package',
+                 'description'      => 'Toys Box',
                  'card'             =>  $card,
-                 'name'             => 'p', 
+                 'name'             => 'newborn', 
                  'amount'           =>  100.00 
             ));
+
+            $user = User::where('email',$request->get('email'))->first();
+
+            $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')];
+            if(!$user){
+                $user = new User;
+                $user->email = $request->get('email');
+                $user->password =  Hash::make($request->get('password'));
+                $user->first_name = $request->get('first_name');
+                $user->last_name  = $request->get('last_name');
+                $user->save();
+                $user_id = $user->id;
+                Auth::attempt($credentials);
+                $request->session()->put('current_user',Auth::user());
+                $request->session()->put('tab',1);
+            }else{  
+                 if (Auth::attempt($credentials)) {
+                     $request->session()->put('current_user',Auth::user());
+                     $request->session()->put('tab',1); 
+                     $user_id = Auth::user()->id;
+                }else{  
+                    return Redirect::to('checkout')
+                        ->withErrors(['loginError'=>'Credentials do not match!'])
+                        ->withInput();
+                }
+            } 
+            
+           
+            $cart = Cart::content();  
+            
+            $pid = [];
+            foreach ($cart as $key => $value) {
+               $transaction = new Transaction;
+  
+               $transaction->product_id     = $value->id;
+               $transaction->product_qty    = $value->qty;
+               $transaction->total_price  = $value->price;
+               $transaction->discount_price  = $value->price;
+               $transaction->transaction_id = $user_id.'-'.time();
+               $transaction->product_name   = $value->name;
+               $transaction->user_id = $user_id;
+               $transaction->payment_mode = 'PayPal';
+               $transaction->status = "pending";
+               $transaction->product_details = json_encode($value);
+
+            }
+
+
+            $shippingBillingAddress = new ShippingBillingAddress;
+
+            $shippingBillingAddress->name = $request->get('first_name').' '.$request->get('last_name');
+            $shippingBillingAddress->user_id =$request->get('first_name');
+            $shippingBillingAddress->phone =$request->get('phone');
+            $shippingBillingAddress->email =$request->get('email');
+            $shippingBillingAddress->address1=$request->get('address');
+            $shippingBillingAddress->address2=$request->get('apt_unit');
+            $shippingBillingAddress->city=$request->get('city');
+            $shippingBillingAddress->status=$request->get('status');
+            $shippingBillingAddress->state=$request->get('status');
+            $shippingBillingAddress->zip_code=$request->get('postal_code');
+            $shippingBillingAddress->country=$request->get('country');
+            $shippingBillingAddress->address_type=$user_id;
+            $shippingBillingAddress->payment_mode = "PayPal";
+            $shippingBillingAddress->others_detail = json_encode($request->all());
+ 
+
             $response   = $transaction->send();
             $data       = $response->getData();
 
             dd( $data );
         }catch (\Exception $e) { 
             dd($e->getMessage());
+
+            return Redirect::to('checkout')
+                        ->withErrors(['error'=>$e->getMessage()])
+                        ->withInput();
+
         }
         
     }
@@ -218,7 +312,7 @@ class ProductController extends Controller {
             if ($request->isMethod('get')) {
                 $product_id = $request->get('id');
                 $product = Product::find($id);   
-                Cart::add(array('id' => $product->id, 'name' => $product->product_title, 'qty' => $qty, 'price' => $product->price,'photo'=>$product->photo));
+                Cart::add(array('productId' => $product->id, 'name' => $product->product_title, 'qty' => $qty, 'price' => $product->price,'photo'=>$product->photo));
             }   
         }
            
@@ -509,6 +603,7 @@ class ProductController extends Controller {
         return view('end-user.myaccount',compact('transaction','categories','products','category','cart','billing','shipping'));
 
     }
-    
+
+
 }   
 
