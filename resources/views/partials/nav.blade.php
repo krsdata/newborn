@@ -2,13 +2,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-2">
-					<a href="#" class="logo">
+					<a href="{{url('/')}}" class="logo">
 						<img src="{{ asset('assets/img/logo.png')}}" alt="">
 					</a>
 				</div>
 				<div class="col-sm-10">
 					<div class="top-bar">
-						<a href="refer"><img src="{{ asset('assets/img/get-box.png') }}"></a>
+						<a href="#"><img src="{{ asset('assets/img/get-box.png') }}"></a>
 
 						<ul>
 							<li class="mega-menu"><a href="#">Pick a box</a>

@@ -185,7 +185,7 @@ class ProductController extends Controller {
                  'description'      => 'Toys Box',
                  'card'             =>  $card,
                  'name'             => 'newborn', 
-                 'amount'           =>  100.00 
+                 'amount'           =>  $sub_total 
             ));
 
             $user = User::where('email',$request->get('email'))->first();
