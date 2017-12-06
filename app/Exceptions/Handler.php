@@ -56,7 +56,7 @@ class Handler extends ExceptionHandler
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
-    {   dd($e);   
+    {   
        $path_info_url = $request->getpathInfo();
        $api_url='';
        $web_url ='';
@@ -88,21 +88,11 @@ class Handler extends ExceptionHandler
         $error_from_route =0;
         if($e instanceof NotFoundHttpException)
         {   
-            $error_from_route =1;
-            if($api_url)
-            {
-                echo json_encode(
-                    [ "status"=>1,
-                      "code"=>200,
-                      "message"=>"Request URL not available" ,
-                      "data" => "" 
-                    ]
-                );
-            }else{
-               
-              $url =  URL::previous().'?error=InvalidURL'; 
-              return Redirect::to($url);
-            } 
+            
+           
+          $url =  URL::previous().'?error=InvalidURL'; 
+          return Redirect::to($url);
+            
             exit();
         }
         if($e instanceof QueryException)

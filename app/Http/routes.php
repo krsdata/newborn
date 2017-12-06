@@ -35,6 +35,12 @@ Route::get('/box/{name}',[
           'uses'  => 'BoxController@index'
         ]);
 
+Route::get('gift/{name}',[
+          'as' => 'gift',
+          'uses'  => 'BoxController@gift'
+        ]);
+
+
 Route::match(['get','post'],'makePayment',[
           'as' => 'makePayment',
           'uses'  => 'ProductController@makePayment'
@@ -209,8 +215,8 @@ Route::post('placeOrder',[
         ]);
 
 
-Route::get('orderSuccess',[
-          'as' => 'orderSuccess',
+Route::get('sucess',[
+          'as' => 'sucess',
           'uses'  => 'ProductController@thankYou'
         ]); 
 

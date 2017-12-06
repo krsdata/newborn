@@ -25,7 +25,6 @@
 									
 								</ul>
 							</li>
-							
 
 							@if(Auth::user()!=null)
 							<li><a href="{{url('myaccount')}}">MyAccount</a></li>

@@ -92,7 +92,7 @@ background:#7bd1e5;
 padding:15px 0 35px;
 }
 .banner-heading h1 {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
     line-height: 36px;
     color: #fff;
@@ -127,7 +127,7 @@ font-weight:600;
     border-radius: 10px;
 }
 .col-sm-4.banner-add ol.carousel-indicators {
-    bottom: 185px;
+    bottom:65px;
 }
 .col-sm-4.banner-add .item p
 {
@@ -154,7 +154,7 @@ font-weight:300;
     margin: 0 auto;
     padding: 10px 15px;
     border-radius: 40px;
-    margin-top: 15px;
+    margin-top: 50px;
 }
 .banner-section .col-sm-8 .carousel {
     margin-top: 85px;
@@ -288,7 +288,6 @@ height:528px;
     color: #333;
     margin-bottom: 15px;
     margin-top: 15px;
-    padding: 0px 23%;
 }
 .social-content .col-sm-12.text-center
 {
@@ -312,12 +311,10 @@ margin-bottom:15px;
 }
 .step {
     text-align: center;
-    padding: 0;
-    margin-top: 30px;
+    padding: 30px 15px 0px;
 }
 .step img {
     margin: 0 auto;
-    height: 90px;
 }
 .step h4
 {
@@ -1029,120 +1026,4 @@ width:100%;
 .input-group.area-text label
 {
 color:#666;
-}
-
-/* start faq css*/
-
-#integration-list {
-    font-family: 'Open Sans', sans-serif;
-    width: 80%;
-    margin: 0 auto;
-    display: table;
-}
-#integration-list ul {
-    padding: 0;
-    margin: 20px 0;
-    color: #555;
-}
-#integration-list ul > li {
-    list-style: none;
-    border-top: 1px solid #ddd;
-    display: block;
-    padding: 15px;
-    overflow: hidden;
-}
-#integration-list ul:last-child {
-    border-bottom: 1px solid #ddd;
-}
-#integration-list ul > li:hover {
-    background: #efefef;
-}
-.expand {
-    display: block;
-    text-decoration: none;
-    color: #555;
-    cursor: pointer;
-}
-h2 {
-    padding: 0;
-    margin: 0;
-    font-size: 17px;
-    font-weight: 400;
-}
-span {
-    font-size: 12.5px;
-}
-#left,#right{
-    display: table;
-}
-#sup{
-    display: table-cell;
-    vertical-align: middle;
-    width: 80%;
-}
-.detail a {
-    text-decoration: none;
-    color: #C0392B;
-    border: 1px solid #C0392B;
-    padding: 6px 10px 5px;
-    font-size: 14px;
-}
-.detail {
-    margin: 10px 0 10px 0px;
-    display: none;
-    line-height: 22px;
-    height: 150px;
-}
-.detail span{
-    margin: 0;
-}
-.right-arrow {
-    margin-top: 12px;
-    margin-left: 20px;
-    width: 10px;
-    height: 100%;
-    float: right;
-    font-weight: bold;
-    font-size: 20px;
-}
-.icon {
-    height: 75px;
-    width: 75px;
-    float: left;
-    margin: 0 15px 0 0;
-}
-.london {
-    background: url("http://placehold.it/50x50") top left no-repeat;
-    background-size: cover;
-}
-.newyork {
-    background: url("http://placehold.it/50x50") top left no-repeat;
-    background-size: cover;
-}
-.paris {
-    background: url("http://placehold.it/50x50") top left no-repeat;
-    background-size: cover;
-}
-
-/* end faq css*/
-
-.banner-add .item ul li
-{
-color:#fff;
-}
-.step h5
-{
-font-size:16px;
-font-weight:600;
-}
-.faq-section {
-    padding: 40px 0px;
-}
-.faq-section h2.text-center {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0;
-}
-div#integration-list {
-    margin-top: 25px;
 }

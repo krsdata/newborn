@@ -59,13 +59,14 @@ class ProductController extends Controller {
         View::share('total_item',Cart::content()->count());
         View::share('sub_total',Cart::subtotal());  
 
-        View::share('userData',$request->session()->get('current_user'));
-         if ($request->session()->has('current_user')) { 
-
-            $this->user_id = $request->session()->get('current_user')->id;
+       
+         if (Auth::user()!=null) { 
+             View::share('userData',Auth::user()->id);
+            $this->user_id = Auth::user()->id; //$request->session()->get('current_user')->id;
 
         }else{
             $this->user_id = "";
+             View::share('userData','');
         }
 
          if ($request->session()->has('tab')) { 
@@ -256,7 +257,7 @@ class ProductController extends Controller {
             $response   = $transaction->send();
             $data       = $response->getData();
 
-            dd( $data );
+            
         }catch (\Exception $e) { 
             dd($e->getMessage());
 
@@ -499,34 +500,29 @@ class ProductController extends Controller {
         
     }
 
-    public function placeOrder(Request $request)
-    {
-        
-    }
+    
 
     public function thankYou(Request $request)
     {
         $user_id    = $this->user_id;
         $cart       = Cart::content();
 
-       
 
         if($cart->count()==0)
         {
-           return  Redirect::to('checkout');
+          // return  Redirect::to('checkout');
         }
         if($user_id=="")
         {
-           return  Redirect::to('order');
+           return  Redirect::to('myaccount');
         }
-
         $products   = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
 
-        $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first();
+        $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first(); 
         $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first(); 
 
-        foreach ($cart as $key => $result) {
+       /* foreach ($cart as $key => $result) {
 
             $transaction                = new Transaction;
             $transaction->user_id       = $user_id;
@@ -539,10 +535,10 @@ class ProductController extends Controller {
             $transaction->product_details = json_encode(Product::where('id',$result->id)->get()->toArray());
             $transaction->save();
              
-        } 
+        } */
         $cart = Cart::content(); 
        // dd(Cart::subtotal());
-        if($cart){
+       /* if($cart){
 
             $email_content['receipent_email'] = $billing->email;
             $email_content['subject'] = "Invoice";
@@ -551,8 +547,8 @@ class ProductController extends Controller {
 
             $data = $template_content; 
          	
-          Helper::sendMail($email_content, $template, $template_content);
-        } 
+        //  Helper::sendMail($email_content, $template, $template_content);
+        } */
 
 
         foreach ($cart as $key => $value) {

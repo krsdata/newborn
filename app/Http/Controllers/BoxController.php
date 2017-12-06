@@ -234,4 +234,14 @@ class BoxController extends Controller
         return view('end-user.terms-conditions',compact('categories','products','category')); 
         return view('end-user.terms-conditions');   
     }
+
+
+    public function gift()
+    {
+          
+        return view('end-user.gift');   
+    }
+
+
+    
 }

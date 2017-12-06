@@ -39,8 +39,7 @@
 
                                 <!-- panel-body  -->
                                 <div class="panel-body">
-                                    <div class="row">       
-                          
+                                    <div class="row">   
                                         <!-- guest-login -->
 
                                         <!-- already-registered-login -->
@@ -48,11 +47,11 @@
                                             
                                                
                                                <div class="form-control1">
-                                                <label class="info-title" for="exampleInputEmail1"> Name <span> :</span> {{ $userData->first_name.' '.$userData->last_name }}</label>
+                                                <label class="info-title" for="exampleInputEmail1"> Name <span> :</span> {{ Auth::user()->first_name.' '.Auth::user()->last_name }}</label>
                                                  
                                               </div>
                                               <div class="form-control1">
-                                                <label class="info-title" for="exampleInputEmail1"> Email <span> :</span> {{ $userData->email}}</label>
+                                                <label class="info-title" for="exampleInputEmail1"> Email <span> :</span> {{ Auth::user()->email}}</label>
                                                  
                                               </div> 
                                              
