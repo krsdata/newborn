@@ -60,13 +60,13 @@
 					<div class="main-menu">
 						<ul>
 							<li><a href="{{url('/')}}">Home</a></li>
-							<li><a href="plan">Toys Boxes</a></li>
-							<li><a href="plan">Offers</a></li>
+							<li><a href="#">Toys Boxes</a></li>
+							<li><a href="#">Offers</a></li>
 							<li><a href="#">Blogs</a></li>
 							<li><a href="login">Join Us</a></li>
-							<li><a href="plan">Toys Shop</a></li>
-							<li><a href="plan">Our Plan</a></li>
-							<li><a href="plan">Pricing</a></li>
+							<li><a href="#">Toys Shop</a></li>
+							<li><a href="#">Our Plan</a></li>
+							<li><a href="#">Pricing</a></li>
 							<li><a href="#">Contact</a></li>
 						</ul>
 						<ul style="float:right">
