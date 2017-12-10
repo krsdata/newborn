@@ -37,14 +37,24 @@
 							SUPPLIES ARE LIMITED</h4>
 													
 							<div class="select-plan-option">
-								<select>
-									<option>Mini Box</option>
-									<option>Small Box</option>
-									<option>Large Box</option>
+								<select> 
+
+									@foreach($boxTypes as $key => $box)
+										<li><a href="{{asset('box/'.camel_case($box->category_name))}}?id={{$box->id}}">
+
+										<option {{(isset($boxDetail) && $box->id==$boxDetail->id)?'selected':''}}>
+											{{$box->category_name}}
+										</option>
+										
+										</a></li>		
+									@endforeach
+
+
+
 								</select>
 							</div>
 							<div class="get-start">
-								<a href="{{ url('plan') }}">Get Started</a>
+								<a href="{{ url('plan/'.camel_case($boxDetail->name.'/'.$boxDetail->id)) }}">Get Started</a>
 							</div>
 
 					</div>
@@ -65,23 +75,7 @@
 		        <div class="row">
 		            <div class="col-md-9 col-sm-6 col-xs-12">
 		              	<div class="prod-description">
-		                  	<h3>Details</h3>
-		                  	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing.</p>
-		                    <ul>
-		                      <li><p><strong>Mini Box</strong> includes 4~7 items. As low as $11.99 per Box.</p></li>
-		                      <li><p><strong>Original Box</strong> includes 8~12 items. As low as $21.99 per Box.</p></li>
-		                      <li><p><strong>Deluxe Box</strong> includes 10~15 premium items. As low as $34.99 per Box.</p></li>
-		                    </ul>
-		                  	<br>
-		                  	<h4>Delivery</h4>
-		                  	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.<a href="#"><strong>NEW shipping schedule</strong></a></p><br/>
-		                    <h4>Shipping</h4>
-		                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</p><br/>
-		                  <h4>Korean expiration/best before dates</h4>
-		                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</p>
-		                  <br>
-		                  <h4>Just want one box?</h4>
-		                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</p>
+		              	{!!$boxDetail->description !!}
 		                </div>
 		            </div>
 		          

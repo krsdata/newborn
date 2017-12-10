@@ -12,6 +12,7 @@ use Immoclick\Admin\Models\Group;
 use Immoclick\Admin\Models\City;
 use Immoclick\Admin\Models\Region;
 use Immoclick\Admin\Models\User;
+use Immoclick\Admin\Models\Category;
 use App\Models\Payment; 
 use Validator;
 use Auth;
@@ -58,6 +59,11 @@ class PaymentController extends Controller {
         $this->lang = $request->segment(1);
         $helper = new Helper;
         View::share('helper', new Helper);
+        $boxes = Category::where('parent_id',0)->get();
+        $gifts = Category::where('parent_id','!=',0)->get();
+
+        View::share('boxType',$boxes); 
+       View::share('giftType',$gifts);  
         
     }
 

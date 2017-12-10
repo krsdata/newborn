@@ -15,7 +15,7 @@
                           <div class="panel-body ">
                               <div class="row">  
 
-                                {!! Form::model($category, ['method' => 'PATCH', 'route' => ['sub-category.update', $category->id],'class'=>'form-horizontal','id'=>'users_form']) !!}
+                                {!! Form::model($category, ['method' => 'PATCH', 'route' => ['gifts.update', $category->id],'class'=>'form-horizontal','id'=>'users_form']) !!}
                                     @include('packages::sub_category.form', compact('category'))
                                 {!! Form::close() !!}
                               </div>

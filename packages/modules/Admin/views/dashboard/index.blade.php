@@ -70,12 +70,12 @@
                 <div class="small-box bg-blue">
                   <div class="inner">
                     <h3>{{ $category }}</h3> 
-                    <p>Total category</p>
+                    <p>Total Box</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
                   </div>
-                  <a href="{{route('category')}}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="{{route('box')}}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!-- ./col -->
 
@@ -110,20 +110,16 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                   <div class="inner">
-                    <h3>Site Settings</h3> 
+                    <h3>Site  </h3> 
                     <p>Update Site information </p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
                   </div>
-                  <a href="{{route('setting')}}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="{{route('setting')}}" class="small-box-footer">
+                  <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-              </div><!-- ./col --> 
-
-              
-            
- 
-
+              </div><!-- ./col -->   
             </div><!-- /.row -->
             <!-- Main row -->  
           </section>

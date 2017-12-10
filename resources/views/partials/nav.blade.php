@@ -6,16 +6,21 @@
 						<img src="{{ asset('assets/img/logo.png')}}" alt="">
 					</a>
 				</div>
+
 				<div class="col-sm-10">
 					<div class="top-bar">
 						<a href="#"><img src="{{ asset('assets/img/get-box.png') }}"></a>
-
+						 
 						<ul>
 							<li class="mega-menu"><a href="#">Pick a box</a>
-								<ul class="sub-menu-top">
-									<li><a href="{{url('box/mini')}}">Mini Box</a></li>
-									<li><a href="{{url('box/smallBox')}}">Small Box world</a></li>
-									<li><a href="{{url('box/largeBox')}}">Large Box</a></li>
+								<ul class="sub-menu-top"> 
+									@foreach($boxTypes as $key => $box)
+									<li><a href="{{asset('box/'.camel_case($box->category_name))}}?id={{$box->id}}">
+									{{$box->category_name}}
+									</a></li>		
+									@endforeach
+								 
+
 								</ul>
 							</li>
 							<li class="mega-menu"><a href="#">Give a gift</a>

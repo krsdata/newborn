@@ -85,6 +85,7 @@ class ProductController extends Controller {
         $page_action = 'Create Product';
         $sub_category_name  = Product::all();
         $category   = Category::all();
+        
         $cat = [];
         foreach ($category as $key => $value) {
              $cat[$value->category_name][$value->id] =  $value->sub_category_name;

@@ -4,14 +4,7 @@
 </head>
 
 <body>
-<table width="600" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td width="197" align="right" valign="top"><!-- <img src="{{env('phase1')}}/plateforme/wp-content/uploads/logo-immo-clic.png" width="197" height="61" style="display:block;" /> --></td>
-    <td align="left" valign="middle" bgcolor="" style="background-color:#FFF ; padding:20px; color:#ffffff;">
-    <div style="font-size:24px;">UDEX</div>
-    </td>
-  </tr>
-</table>
+ 
 <table width="600" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#971800" style="background-color:#971800;">
   <tr>
     <td align="center" valign="top" bgcolor="#ffffff" style="background-color:#A0A0A0 ;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -25,7 +18,7 @@
               <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#53231a;"><div style="font-size:19px;">
               </div>
                 <div>
-                <p>Udex,</p> 
+                <p>Admin,</p> 
                 </div></td>
             </tr>
           </table>

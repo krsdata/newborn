@@ -36,12 +36,12 @@
             </div>
         @endif
 
-          {!! Form::model($user, ['url' => ['admin/login'],'class'=>'form-horizontal','files' => true]) !!}
-            @include('packages::auth.form')
+          {!! Form::model($user, ['url' => ['admin/forgetPassword'],'class'=>'form-horizontal','files' => true]) !!}
+            @include('packages::auth.forgetPasswordform') 
           {!! Form::close() !!}
 
         
-        <a href="{{ url('admin/forgot-password') }}">Forget Password</a>
+        <a href="{{ url('admin') }}">Login In!</a>
  
         <br> 
 

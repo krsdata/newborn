@@ -9,7 +9,7 @@
 					    <div class="stepwizard-row">
 					        <div class="stepwizard-step">
 					            <button type="button" class="btn btn-danger btn-circle">1</button>
-					            <p>Toy Box Mini</p>
+					            <p>{{$boxName}}</p>
 					        </div>
 					        <div class="stepwizard-step">
 					            <button type="button" class="btn btn-danger btn-circle">2</button>

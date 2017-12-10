@@ -64,6 +64,11 @@ class HomeController extends Controller
          View::share('contact_number',$contact_number);
          View::share('company_address',$company_address);
          View::share('banner',$banner); 
+          $boxes = Category::where('parent_id',0)->get();
+        $gifts = Category::where('parent_id','!=',0)->get();
+
+        View::share('boxType',$boxes); 
+        View::share('giftType',$gifts); 
  
  
       // dd(Route::currentRouteName());

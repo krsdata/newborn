@@ -90,7 +90,7 @@
         </div>
     </div> 
 
-     <div class="form-group{{ $errors->first('description', ' has-error') }}">
+    <div class="form-group{{ $errors->first('description', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label">Product Description</label>
         <div class="col-lg-8 col-md-8"> 
             {!! Form::textarea('description',null, ['class' => 'form-control ckeditor form-cascade-control input-small'])  !!}

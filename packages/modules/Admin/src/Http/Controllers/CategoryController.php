@@ -44,7 +44,7 @@ class CategoryController extends Controller {
      */
     public function __construct() {
         $this->middleware('admin');
-        View::share('viewPage', 'category');
+        View::share('viewPage', 'Box');
         View::share('helper',new Helper);
         $this->record_per_page = Config::get('app.record_per_page');
     }
@@ -57,8 +57,8 @@ class CategoryController extends Controller {
 
     public function index(Category $category, Request $request) 
     { 
-        $page_title = 'Category';
-        $page_action = 'View Category'; 
+        $page_title = 'Box';
+        $page_action = 'View Box'; 
         if ($request->ajax()) {
             $id = $request->get('id'); 
             $category = Category::find($id); 
@@ -97,7 +97,7 @@ class CategoryController extends Controller {
 
 
             $html .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $value->level).$value->name;
-            $r = route('category.edit',$value->id);
+            $r = route('box.edit',$value->id);
             $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a>'.'<br>';
 
             $cat = Category::where('parent_id',$value->id)->get();
@@ -106,7 +106,7 @@ class CategoryController extends Controller {
 
                 $cname[$value->name][$result->id][] = ['id'=>$result->id, 'parent_id'=>$result->parent_id,'cname'=>$result->name,'level'=>$result->level];
                 $html  .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $result->level).$result->name;
-                $r = route('sub-category.edit',$result->id);
+                $r = route('sub-box.edit',$result->id);
                 $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i>&nbsp;&nbsp;</a>'.'<br>';
                 $arr[] = ['id'=>$result->id, 'parent_id'=>$result->parent_id, 'cname'=>$result->name,'level'=>$result->level];
                 while (1) {
@@ -120,7 +120,7 @@ class CategoryController extends Controller {
                         $cname[$value->name][$result->id][$parent_id][] = ['id'=>$data->id,'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
 
                          $html  .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $data->level).$data->name;
-                         $r         = route('sub-category.edit',$data->id);
+                         $r         = route('sub-box.edit',$data->id);
                          $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a> '.'<br>';
                          $arr[]  = ['id'=>$data->id, 'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
                     }else{
@@ -143,8 +143,8 @@ class CategoryController extends Controller {
     public function create(Category $category) 
     {
          
-        $page_title = 'Category';
-        $page_action = 'Create category';
+        $page_title = 'Box';
+        $page_action = 'Add Box';
         $sub_category_name  = Category::all();
 
         $html =  Category::renderAsHtml(); 
@@ -176,11 +176,12 @@ class CategoryController extends Controller {
         $cat->parent_id             = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
+        $cat->description        =   $request->get('description');
         $cat->level                 =  1;
         $cat->save();   
 
-        return Redirect::to(route('category'))
-                            ->with('flash_alert_notice', 'New category was successfully created !');
+        return Redirect::to(route('box'))
+                            ->with('flash_alert_notice', 'New Box was successfully Added !');
         }
 
     /*
@@ -190,10 +191,9 @@ class CategoryController extends Controller {
      * */
 
     public function edit(Category $category) {
-
-        $page_title = 'Category';
-        $page_action = 'Edit category'; 
-
+        $page_title = 'Box';
+        $page_action = 'Edit Box'; 
+        
         return view('packages::category.edit', compact( 'category', 'page_title', 'page_action'));
     }
 
@@ -209,11 +209,12 @@ class CategoryController extends Controller {
         $cat->parent_id = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
+         $cat->description          =   $request->get('description');
         $cat->level                 =  1;
         $cat->save();   
 
-        return Redirect::to(route('category'))
-                        ->with('flash_alert_notice', 'Category was  successfully updated !');
+        return Redirect::to(route('box'))
+                        ->with('flash_alert_notice', 'Box was  successfully updated !');
     }
     /*
      *Delete User
@@ -226,19 +227,19 @@ class CategoryController extends Controller {
         try {
             Category::where('id',$category->id)->delete(); 
             return Redirect::to(route('category'))
-                            ->with('flash_alert_notice', 'Category was successfully deleted!');
+                            ->with('flash_alert_notice', 'Box was successfully deleted!');
 
             } catch (Illuminate\Database\QueryException $e) {
                 return Redirect::to(route('category'))
-                            ->with('flash_alert_notice', "Category can't be deleted!");
+                            ->with('flash_alert_notice', "Box can't be deleted!");
 
             } catch (\PDOException $e) {
                 return Redirect::to(route('category'))
-                            ->with('flash_alert_notice', "Category can't be deleted!");
+                            ->with('flash_alert_notice', "Box can't be deleted!");
             }
             catch (\ErrorException $e) {
                  return Redirect::to(route('category'))
-                            ->with('flash_alert_notice', "Category can't be deleted!");
+                            ->with('flash_alert_notice', "Box can't be deleted!");
             }
 
 

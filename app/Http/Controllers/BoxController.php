@@ -64,8 +64,20 @@ class BoxController extends Controller
          View::share('contact_number',$contact_number);
          View::share('company_address',$company_address);
          View::share('banner',$banner); 
- 
- 
+        View::share('boxType',substr($request->getpathInfo(),5)); 
+        
+        $boxes = Category::where('parent_id',0)->get();
+        $gifts = Category::where('parent_id','!=',0)->get();
+
+        View::share('boxTypes',$boxes); 
+        View::share('giftType',$gifts); 
+
+        $box_id = $request->get('id');
+
+        $boxDetail = Category::where('id',$box_id )->first();
+        View::share('boxDetail',$boxDetail); 
+
+   // dd($boxes);
       // dd(Route::currentRouteName());
 
     }
@@ -75,8 +87,10 @@ class BoxController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+       $box = Category::where('name',substr($request->getpathInfo(),5))->first();
+       
        return view('end-user.box');
 
     } 
@@ -95,6 +109,7 @@ class BoxController extends Controller
             $cat->name = title_case($request->get('sub_cat'));
             $cat->slug = strtolower(str_slug($request->get('sub_cat')));
             $cat->parent_id = $request->get('categories');
+            $cat->description =   $request->get('description');
             $cat->save();            
         }
         if($btn=="Add Sub Category")
@@ -108,7 +123,7 @@ class BoxController extends Controller
             $cat->name = title_case($request->get('sub_cat'));
             $cat->slug = strtolower(str_slug($request->get('sub_cat')));
             $cat->parent_id = $request->get('categories');
-
+           $cat->description =   $request->get('description');
             $cat->save();
         }
         $categories =  Category::attr(['name' => 'categories'])
@@ -238,8 +253,16 @@ class BoxController extends Controller
 
     public function gift()
     {
-          
-        return view('end-user.gift');   
+         
+        $box_id = Input::get('id');
+
+        $giftDetail = Category::where('id',$box_id )->first();
+
+        $boxName = Category::find($giftDetail->parent_id);
+        $products = Product::with('category')->where('product_category',$giftDetail->parent_id)->get();
+ 
+        return view('end-user.gift',compact('giftDetail','products','boxName'));  
+
     }
 
 

@@ -9,52 +9,26 @@
 				</div>
 			</div>
 			<div class="row">
+				
+				@foreach($products as $key => $result)
 				<div class="col-sm-4">
 					<div class="gift-box">
+						<a href="{{url('addToCart/'.$result->id)}}"> 
 							<div class="gift-img text-center">
 								<img src="{{ asset('assets/img/box22.png')}}" alt="">
 							</div>
 							<div class="gift-box-content">
-								<h4><b>Gift or Get Mini Toy Box</b></h4>
-								<h5><b>As low as $12.99/Box (+S/H)</b></h5>
-								<p>Lorem ipsum sit amet dolor is the dummy text
-for describing the web site content
-as dummy its a mockup.</p>
-						<p class="get-btn"><a href="#">Get Mini Toy Box</a></p>
+								<p>{{$boxName->name	}} Toy </p>
+									<h4>${!! $result->price !!}/Box</h4>
+ 						<!-- 	<p>{{$result->plan}} Month </p> -->
+						<p>{{$result->product_title	}}</p>
+						</a>
+						<p class="get-btn"><a href="{{url('addToCart/'.$result->id)}}">{{$boxName->name	}}  Toy Box</a></p>
 							</div>
 					</div>
 				</div>
-				<div class="col-sm-4">
-					<div class="gift-box">
-							<div class="gift-img text-center">
-								<img src="{{ asset('assets/img/box22.png')}}" alt="">
-							</div>
-							<div class="gift-box-content">
-								<h4><b>Gift or Get Small Toy Box</b></h4>
-								<h5><b>As low as $12.99/Box (+S/H)</b></h5>
-								<p>Lorem ipsum sit amet dolor is the dummy text
-for describing the web site content
-as dummy its a mockup.</p>
-						<p class="get-btn"><a href="#">Get Small Toy Box</a></p>
-							</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="gift-box">
-							<div class="gift-img text-center">
-								<img src="{{ asset('assets/img/box22.png')}}" alt="">
-							</div>
-							<div class="gift-box-content">
-								<h4><b>Gift or Get Large Toy Box</b></h4>
-								<h5><b>As low as $12.99/Box (+S/H)</b></h5>
+				@endforeach
 
-								<p>Lorem ipsum sit amet dolor is the dummy text
-for describing the web site content
-as dummy its a mockup.</p>
-						<p class="get-btn"><a href="#">Get Large Toy Box</a></p>
-							</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>

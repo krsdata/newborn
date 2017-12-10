@@ -19,10 +19,10 @@
                             <div class="row">
                                 <div class="box">
                                     <div class="box-header">
-                                        <form action="{{route('category')}}" method="get">
+                                        <form action="{{route('gifts')}}" method="get">
                                            
                                             <div class="col-md-3">
-                                                <input value="{{ (isset($_REQUEST['search']))?$_REQUEST['search']:''}}" placeholder="search by category" type="text" name="search" id="search" class="form-control" >
+                                                <input value="{{ (isset($_REQUEST['search']))?$_REQUEST['search']:''}}" placeholder="search by box" type="text" name="search" id="search" class="form-control" >
                                             </div>
                                             <div class="col-md-2">
                                                 <input type="submit" value="Search" class="btn btn-primary form-control">
@@ -30,12 +30,12 @@
                                            
                                         </form>
                                          <div class="col-md-2">
-                                             <a href="{{ route('category') }}">   <input type="submit" value="Reset" class="btn btn-default form-control"> </a>
+                                             <a href="{{ route('gifts') }}">   <input type="submit" value="Reset" class="btn btn-default form-control"> </a>
                                         </div>
                                         <div class="col-md-2 pull-right">
                                             <div style="width: 150px;" class="input-group"> 
-                                                <a href="{{ route('category.create')}}">
-                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Create Category</button> 
+                                                <a href="{{ route('gifts.create')}}">
+                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Add Gift</button> 
                                                 </a>
                                             </div>
                                         </div> 
@@ -51,11 +51,12 @@
                                     @endif
                                       
                                    <div class="box-body table-responsive no-padding" >
+                                   <hr>
                                         <table class="table table-hover table-condensed">
                                             <thead><tr>
                                                     <th>Sno</th> 
-                                                    <th>Category Name</th>
-                                                    <th>Sub Category Name</th>
+                                                    <th>Box Name</th>
+                                                    <th>Gift Name</th>
                                                     <th>Created Date</th> 
                                                     <th>Action</th>
                                                 </tr>
@@ -83,11 +84,11 @@
                                                     </td>
                                                     
                                                     <td> 
-                                                        <a href="{{ route('category.edit',$result->id)}}">
+                                                        <a href="{{ route('gifts.edit',$result->id)}}">
                                                             <i class="fa fa-fw fa-pencil-square-o" title="edit"></i> 
                                                         </a>
 
-                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$result->id, 'route' => array('category.destroy', $result->id))) !!}
+                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$result->id, 'route' => array('gifts.destroy', $result->id))) !!}
                                                         <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$result->id}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
                                                         
                                                          {!! Form::close() !!}

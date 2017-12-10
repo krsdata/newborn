@@ -64,8 +64,17 @@ class PlanController extends Controller
          View::share('contact_number',$contact_number);
          View::share('company_address',$company_address);
          View::share('banner',$banner); 
- 
- 
+        
+        $boxes = Category::where('parent_id',0)->get();
+        $gifts = Category::where('parent_id','!=',0)->get();
+
+        View::share('boxTypes',$boxes); 
+        View::share('giftType',$gifts); 
+
+        $box_id = $request->get('id');
+
+        $boxDetail = Category::where('id',$box_id )->first();
+        View::share('boxDetail',$boxDetail); 
       // dd(Route::currentRouteName());
 
     }
@@ -75,11 +84,12 @@ class PlanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($name=null,$id=null)
     {
-       // $categories = Category::nested()->get();
- 
-        return view('end-user.plan', compact('banner_path1', 'banner_path2'));
+        $boxName = Category::find($id);
+        $product = Product::with('category')->where('product_category',$id)->get();
+      
+        return view('end-user.plan', compact('product','boxName'));
 
     } 
 

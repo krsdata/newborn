@@ -97,10 +97,21 @@ class ProductController extends Controller {
          View::share('contact_number',$contact_number);
          View::share('company_address',$company_address);
          View::share('banner',$banner); 
+        
+         $boxes = Category::where('parent_id',0)->get();
+        $gifts = Category::where('parent_id','!=',0)->get();
+
+        View::share('boxTypes',$boxes); 
+        View::share('giftType',$gifts); 
+
+        $box_id = $request->get('id');
+
+        $boxDetail = Category::where('id',$box_id )->first();
+        View::share('boxDetail',$boxDetail); 
 
           
       //  dd(Route::currentRouteName());
- 
+        //dd(Cart::subtotal());
     }
 
     protected $categories;
@@ -109,13 +120,14 @@ class ProductController extends Controller {
      * Dashboard
      * */
 
-    public function index(Request $request) 
+    public function index(Request $request,$id) 
     {  
         $cart = Cart::content();  
         $pid = [];
         foreach ($cart as $key => $value) {
             $pid[] = $value->id;
         }
+
         $product_photo =   Product::whereIn('id',$pid)->get(['photo','id'])->toArray();
          
         return view('cart', compact('cart','product_photo'));
@@ -131,29 +143,30 @@ class ProductController extends Controller {
         }
         $product_photo =   Product::whereIn('id',$pid)->get(['photo','id'])->toArray();
         
-        $products = Product::with('category')->whereIn('id',$pid)->orderBy('id','asc')->get();
+        $products = Product::with('category')->whereIn('id',$pid)->orderBy('id','asc')->first();
         $categories = Category::nested()->get(); 
-
-        return view('end-user.checkout',compact('categories','products','category','cart','product_photo'));  
+       
+        $boxName = isset(($products->category)->name)?(($products->category)->name):'';
+         
+        return view('end-user.checkout',compact('categories','products','category','cart','product_photo','boxName'));  
     }
     // make payment 
     public function makePayment(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
-             'first_name' => 'required|max:50',
-                'last_name' => 'required|max:50',
-                'city' => 'required|max:255',
-                'state'=> 'required|max:255',
-                'postal_code' => 'required|max:20',
-                'country' => 'required|max:255',
-                'phone' => 'required|max:15|regex:/([0-9 ])+/',
-                'credit_card_number' => 'required|max:16',
-                'cvv' => 'required|numeric|min:3',
-                'month' => 'required',
-                'year' => 'required|digits:4|integer|min:'.(date('Y')),
-                'email' => 'required|email',
-                'password' => 'required'
+            'first_name' => 'required|max:50',
+            'last_name' => 'required|max:50',
+            'city' => 'required|max:255',
+            'state'=> 'required|max:255',
+            'postal_code' => 'required|max:20',
+            'country' => 'required|max:255',
+            'phone' => 'required|max:15|regex:/([0-9 ])+/',
+            'credit_card_number' => 'required|max:16',
+            'cvv' => 'required|numeric|min:3',
+            'month' => 'required',
+            'year' => 'required|digits:4|integer|min:'.(date('Y')),
+            'email' => 'required|email',
+            'password' => 'required'
 
         ]); 
         if ($validator->fails()) {
@@ -165,7 +178,7 @@ class ProductController extends Controller {
         try{
 
             $gateway = Omnipay::create('PayPal_Pro');
- 
+            
             $gateway->setUsername( 'kundan.r-facilitator-3_api1.cisinlabs.com' );
             $gateway->setPassword( '32UN5286G4FDKWK7' );
             $gateway->setSignature( 'AgsyRufAX1NOEGmzAg0vXIX4pkjQAEaRyKcNiHzfR5Ka0I-74umoKXhH' ); 
@@ -181,41 +194,48 @@ class ProductController extends Controller {
                 'cvv'                   => $request->get('cvv')
             )); 
             
-                $transaction = $gateway->purchase(array(
+            $transaction_paypal = $gateway->purchase(array(
                  'currency'         => 'USD',
                  'description'      => 'Toys Box',
                  'card'             =>  $card,
                  'name'             => 'newborn', 
-                 'amount'           =>  $sub_total 
+                 'amount'           =>  Cart::subtotal() //$sub_total 
             ));
-
-            $user = User::where('email',$request->get('email'))->first();
-
-            $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')];
-            if(!$user){
-                $user = new User;
-                $user->email = $request->get('email');
-                $user->password =  Hash::make($request->get('password'));
-                $user->first_name = $request->get('first_name');
-                $user->last_name  = $request->get('last_name');
-                $user->save();
-                $user_id = $user->id;
-                Auth::attempt($credentials);
-                $request->session()->put('current_user',Auth::user());
-                $request->session()->put('tab',1);
-            }else{  
-                 if (Auth::attempt($credentials)) {
-                     $request->session()->put('current_user',Auth::user());
-                     $request->session()->put('tab',1); 
-                     $user_id = Auth::user()->id;
-                }else{  
-                    return Redirect::to('checkout')
-                        ->withErrors(['loginError'=>'Credentials do not match!'])
-                        ->withInput();
-                }
-            } 
             
-           
+            if(Auth::check()){
+                $user       = User::where('id',Auth::user()->id)->first();
+                $user_id    = $user->id;
+            }else{
+                $user = User::where('email',$request->get('email'))->first();
+                $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')];
+                if(!$user){
+                    $user               = new User;
+                    $user->email        = $request->get('email');
+                    $user->password     =  Hash::make($request->get('password'));
+                    $user->first_name   = $request->get('first_name');
+                    $user->last_name    = $request->get('last_name');
+                    $user->save();
+                    $user_id            = $user->id;
+                    Auth::attempt($credentials);
+                    $request->session()->put('current_user',Auth::user());
+                    $request->session()->put('tab',1); 
+                }else{  
+                    if (Auth::attempt($credentials)) {
+                        $request->session()->put('current_user',Auth::user());
+                        $request->session()->put('tab',1); 
+                        $user_id = Auth::user()->id;
+                        return Redirect::to('/');
+
+                    }else{  
+                        return Redirect::to('checkout')
+                            ->withErrors(['loginError'=>'Credentials do not match!'])
+                            ->withInput();
+                    }
+                }
+            }
+            $response   = $transaction_paypal->send();
+            $data       = $response->getData(); 
+
             $cart = Cart::content();  
             
             $pid = [];
@@ -232,34 +252,51 @@ class ProductController extends Controller {
                $transaction->payment_mode = 'PayPal';
                $transaction->status = "pending";
                $transaction->product_details = json_encode($value);
-
+               $transaction->save();
             }
 
 
             $shippingBillingAddress = new ShippingBillingAddress;
 
             $shippingBillingAddress->name = $request->get('first_name').' '.$request->get('last_name');
-            $shippingBillingAddress->user_id =$request->get('first_name');
-            $shippingBillingAddress->phone =$request->get('phone');
-            $shippingBillingAddress->email =$request->get('email');
-            $shippingBillingAddress->address1=$request->get('address');
-            $shippingBillingAddress->address2=$request->get('apt_unit');
-            $shippingBillingAddress->city=$request->get('city');
-            $shippingBillingAddress->status=$request->get('status');
-            $shippingBillingAddress->state=$request->get('status');
-            $shippingBillingAddress->zip_code=$request->get('postal_code');
-            $shippingBillingAddress->country=$request->get('country');
-            $shippingBillingAddress->address_type=$user_id;
+            $shippingBillingAddress->name       =   $request->get('first_name');
+            $shippingBillingAddress->user_id    =   $user_id;
+            $shippingBillingAddress->phone      =   $request->get('phone');
+            $shippingBillingAddress->email      =   $request->get('email');
+            $shippingBillingAddress->address1   =   $request->get('address');
+            $shippingBillingAddress->address2   =   $request->get('apt_unit');
+            $shippingBillingAddress->city       =   $request->get('city');
+            $shippingBillingAddress->status     =   $request->get('status');
+            $shippingBillingAddress->state      =   $request->get('state');
+            $shippingBillingAddress->zip_code   =   $request->get('postal_code');
+            $shippingBillingAddress->country    =   $request->get('country');
+            $shippingBillingAddress->address_type=  1;
             $shippingBillingAddress->payment_mode = "PayPal";
             $shippingBillingAddress->others_detail = json_encode($request->all());
- 
+            $shippingBillingAddress->save();
 
-            $response   = $transaction->send();
-            $data       = $response->getData();
 
+            if(isset($data['ACK']) && $data['ACK']=='Success'){
+
+                $trns = Transaction::find($transaction->id);
+                $trns->transaction_detail =  json_encode($data);
+                $trns->paypal_transaction_id =  $data['TRANSACTIONID'];
+                $trns->status = $data['ACK'];
+                $trns->save();
+
+            }else{
+
+                $trns = Transaction::find($transaction->id);
+                $trns->transaction_detail =  json_encode($data);
+                $trns->paypal_transaction_id =  isset($data['TRANSACTIONID'])?$data['TRANSACTIONID']:'';
+                $trns->status = isset($data['ACK'])?$data['ACK']:'';
+                $trns->save();
+
+            }
+
+            return Redirect::to('myaccount');
             
         }catch (\Exception $e) { 
-            dd($e->getMessage());
 
             return Redirect::to('checkout')
                         ->withErrors(['error'=>$e->getMessage()])
@@ -273,6 +310,13 @@ class ProductController extends Controller {
 
     public function addToCart(Request $request, $id) 
     { 
+        
+        $bx = explode('/',URL::previous());
+        
+        $box_id =  $bx[(count($bx)-1)];
+        
+        $boxName = Category::where('id',$box_id)->first();
+
         $c = ['1'=>'mini','2'=>'small','3'=>'large'];
         $item =  $request->get('item'); 
          if($item ){
@@ -281,15 +325,18 @@ class ProductController extends Controller {
             $qty = 1;
          } 
         if ($request->isMethod('get')) {
-            $product_id = $request->get('id');
-            //$product = Product::find($id);   
-            Cart::add(array('id' => $id, 'name' => $c[$id], 'qty' => $qty, 'price' => 100,'photo'=>''));
+             
+            $product = Product::find($id);   
+
+            Cart::add(array('id' => $id, 'name' => $product->product_title, 'qty' => $qty, 'price' => $product->price,'photo'=>''));
         }
         $cart = Cart::content();  
+        
+        $request->session()->put('key', 'value');
 
-       // $request->session()->put('key', 'value');
+        $box = isset($boxName->name)?$boxName->name:'';
         //return Redirect::to(url()->previous());
-         return Redirect::to('checkout');
+        return Redirect::to('checkout?box='.$box);
          
     }
 
@@ -581,22 +628,25 @@ class ProductController extends Controller {
 
     public function myaccount(Request $request)
     {   
-        
-        if($this->user_id=="")
+       
+        if(!Auth::check())
         {      
             return Redirect::to('myaccount/login');
         }
-        $cart = Cart::content();
-        $products = Product::with('category')->orderBy('id','asc')->get();
+        $cart       = Cart::content();
+        $products   = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
 
         $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first(); 
 
-        $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first(); 
-        $transaction                = Transaction::where('user_id',$this->user_id)->get();
+        $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first(); 
+
+        $transactions    = Transaction::where('user_id',$this->user_id)->orderBy('id','desc')->get();
+
+        $user = User::find(Auth::user()->id);  
 
 
-        return view('end-user.myaccount',compact('transaction','categories','products','category','cart','billing','shipping'));
+        return view('end-user.myaccount',compact('user','transactions','categories','products','category','cart','billing','shipping'));
 
     }
 

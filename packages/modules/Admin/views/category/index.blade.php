@@ -18,17 +18,29 @@
                         <div class="portlet-body">
                             <div class="row">
                                 <div class="box">
-                                    <div class="box-header">
-                                        <span style="font-size: 30px;"> Category    </span>
-                                        <span>
-                                        
-                                                 <a href="{{ route('category.create')}}" class="col-md-2 pull-right">
-                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Add Category</button> 
+                                     <div class="box-header">
+                                        <form action="{{route('box')}}" method="get">
+                                           
+                                            <div class="col-md-3">
+                                                <input value="{{ (isset($_REQUEST['search']))?$_REQUEST['search']:''}}" placeholder="search by box" type="text" name="search" id="search" class="form-control" >
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="submit" value="Search" class="btn btn-primary form-control">
+                                            </div>
+                                           
+                                        </form>
+                                         <div class="col-md-2">
+                                             <a href="{{ route('box') }}">   <input type="submit" value="Reset" class="btn btn-default form-control"> </a>
+                                        </div>
+                                        <div class="col-md-2 pull-right">
+                                            <div style="width: 150px;" class="input-group"> 
+                                                <a href="{{ route('box.create')}}">
+                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Add Box</button> 
                                                 </a>
-                                              </span>
-                                        
-                                      </div><!-- /.box-header -->
-                                       
+                                            </div>
+                                        </div> 
+                                    </div><!-- /.box-header -->
+
                                 
                                       @if(Session::has('flash_alert_notice'))
                                            <div class="alert alert-success alert-dismissable" >
@@ -41,7 +53,7 @@
                             
                                         
                                       <div class="box-body table-responsive no-padding" >
-                                         
+                                         <hr>
                                         <table class="table table-striped table-hover table-bordered">
                                             <thead><tr>
                                                     <th>Sno</th> 
@@ -68,7 +80,7 @@
                                                 <tr>
                                                     <td>{{ ++$i }}</td>
                                                     <td>{{ $result->name }}  
-                                                        <a href="{{ route('category.edit',$result->id)}}">
+                                                        <a href="{{ route('box.edit',$result->id)}}">
                                                             <i class="fa fa-fw fa-pencil-square-o" title="edit"></i> 
                                                         </a></td> 
                                                     
@@ -78,7 +90,7 @@
                                                     
                                                     <td> 
 
-                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$result->id, 'route' => array('category.destroy', $result->id))) !!}
+                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$result->id, 'route' => array('box.destroy', $result->id))) !!}
                                                         <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$result->id}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
                                                         
                                                          {!! Form::close() !!}

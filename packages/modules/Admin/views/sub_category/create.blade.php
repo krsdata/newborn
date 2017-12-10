@@ -14,7 +14,7 @@
                        <div class="panel panel-cascade">
                           <div class="panel-body ">
                               <div class="row">  
-                                      {!! Form::model($category, ['route' => ['sub-category.store'],'class'=>'form-horizontal','id'=>'users_form']) !!}
+                                      {!! Form::model($category, ['route' => ['gifts.store'],'class'=>'form-horizontal','id'=>'users_form']) !!}
                                         @include('packages::sub_category.form')
                                       {!! Form::close() !!}
                               </div>

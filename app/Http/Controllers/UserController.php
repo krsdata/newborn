@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
+use Modules\Admin\Models\Category;
+use Modules\Admin\Models\Product; 
 use Input;
 use Validator;
 use Auth;
@@ -21,12 +23,74 @@ use Crypt;
 use Response;
 use App\User;
 use JWTAuth;
-use Session; 
+use Session;
+use Cart; 
+use Modules\Admin\Models\Settings;
 
 class UserController extends Controller
 {
 
-   	public function index(Request $request)
+   	 public function __construct(Request $request, Settings $setting) {
+
+        View::share('category_name', $request->segment(1));
+        View::share('total_item',Cart::content()->count());
+        View::share('sub_total',Cart::subtotal());  
+
+       
+         if (Auth::user()!=null) { 
+             View::share('userData',Auth::user()->id);
+            $this->user_id = Auth::user()->id; //$request->session()->get('current_user')->id;
+
+        }else{
+            $this->user_id = "";
+             View::share('userData','');
+        }
+
+         if ($request->session()->has('tab')) { 
+          View::share('tab',$request->session()->get('tab'));
+       
+        }else{
+            View::share('tab',"0");
+       
+        }
+
+        $hot_products   = Product::orderBy('views','desc')->limit(3)->get();
+        $special_deals  = Product::orderBy('discount','desc')->limit(3)->get(); 
+        View::share('hot_products',$hot_products);
+        View::share('special_deals',$special_deals);  
+
+        $website_title      = $setting::where('field_key','website_title')->first();
+        $website_email      = $setting::where('field_key','website_email')->first();
+        $website_url        = $setting::where('field_key','website_url')->first();
+        $contact_number     = $setting::where('field_key','contact_number')->first();
+        $company_address    = $setting::where('field_key','company_address')->first();
+
+        $banner             = $setting::where('field_key','LIKE','%banner_image%')->get();
+
+
+         View::share('website_title',$website_title);
+         View::share('website_email',$website_email);
+         View::share('website_url',$website_url);
+         View::share('contact_number',$contact_number);
+         View::share('company_address',$company_address);
+         View::share('banner',$banner); 
+        
+         $boxes = Category::where('parent_id',0)->get();
+        $gifts = Category::where('parent_id','!=',0)->get();
+
+        View::share('boxTypes',$boxes); 
+        View::share('giftType',$gifts); 
+
+        $box_id = $request->get('id');
+
+        $boxDetail = Category::where('id',$box_id )->first();
+        View::share('boxDetail',$boxDetail); 
+
+          
+      //  dd(Route::currentRouteName());
+ 
+    }
+    public function index(Request $request)
     {  		
     	//dd( $request->session()->get('current_user'));
          return view('welcome');
@@ -40,6 +104,7 @@ class UserController extends Controller
     public function login(Request $request)
     {    
         $input = $request->all();
+        dd($input );
         if (!Auth::attempt(['email'=>$request->input('email'),'password'=>$request->input('password')])) {
             return response()->json([ "status"=>0,"message"=>"Invalid email or password. Try again!" ,'data' => '' ]);
         }

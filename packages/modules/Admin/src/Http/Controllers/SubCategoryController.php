@@ -44,7 +44,7 @@ class SubCategoryController extends Controller {
      */
     public function __construct() {
         $this->middleware('admin');
-        View::share('viewPage', 'Sub-category');
+        View::share('viewPage', 'Gift');
         View::share('helper',new Helper);
         $this->record_per_page = Config::get('app.record_per_page');
     }
@@ -57,8 +57,8 @@ class SubCategoryController extends Controller {
 
     public function index(Category $category, Request $request) 
     { 
-        $page_title = 'Sub category';
-        $page_action = 'View Sub Category'; 
+        $page_title = 'Gift';
+        $page_action = 'View Gift'; 
         if ($request->ajax()) {
             $id = $request->get('id'); 
             $category = Category::find($id); 
@@ -72,7 +72,7 @@ class SubCategoryController extends Controller {
        
         
         
-        return view('packages::category.index', compact('categories', 'page_title', 'page_action'));
+        return view('packages::sub_category.index', compact('categories', 'page_title', 'page_action'));
     }
 
     /*
@@ -81,8 +81,8 @@ class SubCategoryController extends Controller {
 
     public function create(SubCategory $category) 
     {
-        $page_title     = 'Category';
-        $page_action    = 'Create Sub-category';
+        $page_title     = 'Gift';
+        $page_action    = 'Add Gift';
          
 
         $html =  Category::renderAsHtml(); 
@@ -129,8 +129,8 @@ class SubCategoryController extends Controller {
         $cat->level                 =   $level;
         $cat->save();  
        
-        return Redirect::to(route('category'))
-                            ->with('flash_alert_notice', 'New Sub category was successfully created !');
+        return Redirect::to(route('gifts'))
+                            ->with('flash_alert_notice', 'New gifts was successfully created !');
         }
 
     /*
@@ -141,8 +141,8 @@ class SubCategoryController extends Controller {
 
     public function edit(SubCategory $category) {
 
-        $page_title = 'Category';
-        $page_action = 'Edit Sub-category';  
+        $page_title = 'Gift';
+        $page_action = 'Edit Gift';  
         
 
         $html =  Category::renderAsHtml(); 
@@ -182,8 +182,8 @@ class SubCategoryController extends Controller {
         $cat->save(); 
 
 
-        return Redirect::to(route('category'))
-                        ->with('flash_alert_notice', 'Sub Category was  successfully updated !');
+        return Redirect::to(route('gifts'))
+                        ->with('flash_alert_notice', 'Gifts was  successfully updated !');
     }
     /*
      *Delete User
@@ -194,8 +194,8 @@ class SubCategoryController extends Controller {
         
         Category::where('id',$category->id)->delete();
 
-        return Redirect::to(route('category'))
-                        ->with('flash_alert_notice', 'Sub Category was successfully deleted!');
+        return Redirect::to(route('gifts'))
+                        ->with('flash_alert_notice', 'Gifts was successfully deleted!');
     }
 
     public function show(Category $category) {

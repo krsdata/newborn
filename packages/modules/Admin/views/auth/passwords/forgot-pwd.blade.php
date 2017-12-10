@@ -28,7 +28,7 @@
 
             <p class="login-box-msg">{{ Lang::get('immoclick-lang.forgot_password') }}</p> 
         {!!  Form::open(array('url' => 'admin/forgot-password', 'method' => 'post','id'=>'user_login')) !!}
-          @include('packages::loginpage.forgetpwd-form')
+          @include('packages::auth.passwords.forgetpwd-form')
                
 
         {!! Form::close() !!}  

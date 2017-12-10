@@ -10,8 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-
 Route::get('home',[
           'as' => 'home',
           'uses'  => 'HomeController@index'
@@ -22,14 +20,21 @@ Route::get('/refer',[
           'as' => 'refer',
           'uses'  => 'ReferController@index'
         ]);
+
+
 Route::get('/plan',[
           'as' => 'plan',
           'uses'  => 'PlanController@index'
         ]);
-Route::get('/gift/{name}',[
+
+
+Route::get('/plan/{name}/{id}',[
           'as' => 'plan',
           'uses'  => 'PlanController@index'
         ]);
+
+
+ 
 Route::get('/box/{name}',[
           'as' => 'boxPage',
           'uses'  => 'BoxController@index'
@@ -238,18 +243,6 @@ Route::get('myaccount',[
           'as' => 'myaccount',
           'uses'  => 'ProductController@myaccount'
         ]); 
-
- 
-        
-Route::get('myaccount/signup',[
-          'as' => 'myaccount-signup',
-          'uses'  => 'ProductController@showSignupForm'
-        ]); 
-
-Route::post('myaccount/signup',[
-          'as' => 'userSignup',
-          'uses'  => 'UserController@userSignup'
-        ]); 
         
 Route::get('signup',[
           'as' => 'myaccount-signup',
@@ -261,10 +254,9 @@ Route::get('signup',[
 Route::post('login',function(App\User $user , Illuminate\Http\Request $request){ 
 
       $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')];  
-       
-          if (Auth::attempt($credentials)) {
-             $request->session()->put('current_user',Auth::user());
-             
+        
+            if (Auth::attempt($credentials)) {
+                $request->session()->put('current_user',Auth::user());
                 return redirect()->intended('/'); 
           }else{  
               return redirect()

@@ -92,5 +92,71 @@ class AuthController extends Controller
         } 
 	}
 
+    public function forgetPassword(User $user, Request $request)
+    {
+        return view('packages::auth.forgetPassword', compact('user'));
+    }
+    
+    public function resetPassword(User $user, Request $request)
+    {
+        $encryptedValue = ($request->get('key'))?$request->get('key'):''; 
+        $method_name = $request->method();
+        $token = $request->get('token');
+  
+         
+        if($method_name=='GET')
+        {    
+            try {    
+                $email = Crypt::decrypt($encryptedValue); 
+             
+                if (Hash::check($email, $token)) {
+                   // return view('admin.auth.passwords.reset',compact('token','email')); 
+
+                    return view('packages::auth.reset', compact('token','email'))->withErrors(['message'=>'Invalid reset password link!']); 
+                }else{
+
+                   return view('packages::auth.reset', compact('token','email'))->withErrors(['message'=>'Invalid reset password link!']); 
+                } 
+                
+            } catch (DecryptException $e) {
+                   
+                return view('packages::auth.reset', compact('token','email'))->withErrors(['message'=>'Invalid reset password link!']);  
+
+            }
+            
+        }else
+        {
+            
+             $email = Crypt::decrypt($encryptedValue); 
+             dd($email);
+            try {
+                $email = Crypt::decrypt($encryptedValue); 
+                 dd($email );
+                if (Hash::check($email, $token)) {
+                        $password =  Hash::make($request->get('password'));
+                        $user = User::where('email',$request->get('email'))->update(['password'=>$password]);
+                      
+                        return view('packages::auth.reset', compact('token','email'))->withErrors(['message'=>'Password reset successfully.']); 
+
+                         
+                }else{ dd('2');
+                    return Redirect::to(URL::previous())->withErrors(['message'=>'Invalid reset password link!']);
+                } 
+                
+            } catch (DecryptException $e) {
+                dd($e->getMessage());
+                 return Redirect::to(URL::previous())->withErrors(['message'=>'Invalid reset password link!']);
+    
+            }
+
+ 
+            
+        } 
+    }
+
+    public function passwordReset(User $user, Request $request)
+    {
+        
+    }
  
 }

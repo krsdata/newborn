@@ -8,10 +8,11 @@
 
     Route::get('admin/forgot-password','Modules\Admin\Http\Controllers\AuthController@forgetPassword');
     Route::post('password/email','Modules\Admin\Http\Controllers\AuthController@sendResetPasswordLink');
-    Route::get('admin/password/reset','Modules\Admin\Http\Controllers\AuthController@resetPassword'); 
+    Route::match(['get','post'],'admin/password/reset','Modules\Admin\Http\Controllers\AuthController@resetPassword'); 
+    Route::match(['get','post'],'password/reset','Modules\Admin\Http\Controllers\AuthController@resetPassword'); 
 
 
-      Route::post('admin/login',function(App\Admin $user){
+    Route::post('admin/login',function(App\Admin $user){
         $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')]; 
             $auth = auth()->guard('admin');
         
@@ -23,7 +24,50 @@
                             ->withInput()  
                             ->withErrors(['message'=>'Invalid email or password. Try again!']);
                 } 
-        }); 
+    }); 
+ 
+    Route::post('admin/forgetPassword',function(App\User $user){
+
+        $user = \App\Admin::where('email',Input::get('email'))->first();
+        
+        
+            if ($user!=null) {
+                $email = Input::get('email');
+                $temp_password = Hash::make($email);
+                
+              // Send Mail after forget password
+               
+                $email_content = array(
+                                'receipent_email'   => Input::get('email'),
+                                'subject'           => 'Your Account Password',
+                                'name'              => $user->first_name,
+                                'temp_password'     => $temp_password,
+                                'encrypt_key'       => Crypt::encrypt($email),
+                                'greeting'          => 'Admin'
+
+                            );
+               
+
+                 Mail::send('emails.forgot_password_link', array('content' => $email_content), function($message) use($email_content)
+                  {
+                    $name = 'Admin';
+                    $message->from('no-reply@admin.com',$name);   
+                    $message->to($email_content['receipent_email'])->subject($email_content['subject']);
+                    
+                  });
+                 return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['message'=>1]);
+
+            }else{ 
+                return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['message'=>'Invalid email address.Try again!']);
+            } 
+    }); 
+
       
     Route::group(['middleware' => ['admin']], function () { 
 
@@ -51,19 +95,19 @@
   
         /*------------User Category and controller---------*/
 
-            Route::bind('category', function($value, $route) {
+            Route::bind('box', function($value, $route) {
                 return Modules\Admin\Models\Category::find($value);
             });
      
-            Route::resource('admin/category', 'Modules\Admin\Http\Controllers\CategoryController', [
+            Route::resource('admin/box', 'Modules\Admin\Http\Controllers\CategoryController', [
                 'names' => [
-                    'edit' => 'category.edit',
-                    'show' => 'category.show',
-                    'destroy' => 'category.destroy',
-                    'update' => 'category.update',
-                    'store' => 'category.store',
-                    'index' => 'category',
-                    'create' => 'category.create',
+                    'edit' => 'box.edit',
+                    'show' => 'box.show',
+                    'destroy' => 'box.destroy',
+                    'update' => 'box.update',
+                    'store' => 'box.store',
+                    'index' => 'box',
+                    'create' => 'box.create',
                 ]
                     ]
             );
@@ -72,19 +116,19 @@
 
         /*------------User Category and controller---------*/
 
-            Route::bind('sub-category', function($value, $route) {
+            Route::bind('gifts', function($value, $route) {
                 return Modules\Admin\Models\SubCategory::find($value);
             });
      
-            Route::resource('admin/sub-category', 'Modules\Admin\Http\Controllers\SubCategoryController', [
+            Route::resource('admin/gifts', 'Modules\Admin\Http\Controllers\SubCategoryController', [
                 'names' => [
-                    'edit' => 'sub-category.edit',
-                    'show' => 'sub-category.show',
-                    'destroy' => 'sub-category.destroy',
-                    'update' => 'sub-category.update',
-                    'store' => 'sub-category.store',
-                    'index' => 'sub-category',
-                    'create' => 'sub-category.create',
+                    'edit' => 'gifts.edit',
+                    'show' => 'gifts.show',
+                    'destroy' => 'gifts.destroy',
+                    'update' => 'gifts.update',
+                    'store' => 'gifts.store',
+                    'index' => 'gifts',
+                    'create' => 'gifts.create',
                 ]
                     ]
             );
