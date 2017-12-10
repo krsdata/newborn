@@ -23,13 +23,22 @@
 
 								</ul>
 							</li>
+						 
+
 							<li class="mega-menu"><a href="#">Give a gift</a>
 								<ul class="sub-menu-top">
-									<li><a href="{{url('gift/box')}}">Gift Box</a></li>
-									<li><a href="{{url('gift/card')}}">Gift Card</a></li>
+
+									@foreach($giftType as $key => $gift)
+									<li><a href="{{asset('gift/'.camel_case($gift->name))}}?id={{$gift->id}}">
+									{{$gift->name}}
+									</a></li>		
+									@endforeach
+
 									
 								</ul>
 							</li>
+
+
 
 							@if(Auth::user()!=null)
 							<li><a href="{{url('myaccount')}}">MyAccount</a></li>

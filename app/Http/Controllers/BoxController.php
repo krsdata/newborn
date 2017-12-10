@@ -256,12 +256,23 @@ class BoxController extends Controller
          
         $box_id = Input::get('id');
 
-        $giftDetail = Category::where('id',$box_id )->first();
+        try{
 
-        $boxName = Category::find($giftDetail->parent_id);
-        $products = Product::with('category')->where('product_category',$giftDetail->parent_id)->get();
+             $giftDetail = Category::where('id',$box_id )->first();
+             if($giftDetail==null){
+                return Redirect::to(URL::previous());
+             } 
+            $boxName = Category::find($giftDetail->parent_id);
+            $products = Product::with('category')->where('product_category',$giftDetail->parent_id)->get();
+          return view('end-user.gift',compact('giftDetail','products','boxName'));  
+
+        }catch(Exception $e){
+           return Redirect::to(URL::previous());
+        }
+
+       
  
-        return view('end-user.gift',compact('giftDetail','products','boxName'));  
+      
 
     }
 
